@@ -1,0 +1,15 @@
+# Dépendances Node.js (trop lourd pour GitHub)
+node_modules/
+
+# Variables secrètes (mot de passe MySQL, JWT...)
+.env
+
+# Fichiers logs
+*.log
+
+# Fichiers système Mac
+.DS_Store
+
+# Fichiers système Windows
+Thumbs.db
+desktop.ini

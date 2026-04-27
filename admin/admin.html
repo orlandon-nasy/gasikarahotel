@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<!-- Déclaration HTML5 -->
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GasikaraHotel – Admin Dashboard</title>
+
+  <!-- Lien vers le CSS du dashboard (fichier séparé) -->
+  <link rel="stylesheet" href="admin.css" />
+
+  <!-- Police Syne pour les titres (caractère technique/moderne) -->
+  <!-- Police DM Mono pour les chiffres et codes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Chart.js pour les graphiques -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+
+<body class="page-login-active">
+pwd
+  <!-- ══════════════════════════════════════════════════════════════════
+       PAGE DE CONNEXION ADMIN
+       Affichée par défaut, cachée après authentification réussie
+  ══════════════════════════════════════════════════════════════════════ -->
+  <div class="login-page" id="login-page">
+
+    <!-- Fond décoratif avec motif -->
+    <div class="login-fond">
+      <div class="login-fond-cercle c1"></div>
+      <div class="login-fond-cercle c2"></div>
+      <div class="login-fond-cercle c3"></div>
+    </div>
+
+    <!-- Boîte de connexion centrale -->
+    <div class="login-boite">
+
+      <!-- Logo de l'hôtel -->
+      <div class="login-logo">
+        <div class="login-logo-icone">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <div>
+          <div class="login-logo-nom">GASIKARA<span>HOTEL</span></div>
+          <div class="login-logo-sous">Panneau d'administration</div>
+        </div>
+      </div>
+
+      <!-- Titre de la page de connexion -->
+      <h2 class="login-titre">Connexion Admin</h2>
+      <p class="login-desc">Accès réservé au personnel autorisé</p>
+
+      <!-- Message d'erreur (affiché par JS si échec) -->
+      <div class="login-erreur" id="login-erreur">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span id="login-erreur-msg">Identifiants incorrects</span>
+      </div>
+
+      <!-- Formulaire de connexion -->
+      <!-- onsubmit appelle la fonction JS de vérification -->
+      <form id="form-login" onsubmit="connecterAdmin(event)">
+
+        <!-- Champ Email -->
+        <div class="login-groupe">
+          <label for="admin-email">
+            <i class="fa-solid fa-envelope"></i> Adresse email
+          </label>
+          <input
+            type="email"
+            id="admin-email"
+            placeholder="email@gmail.com"
+            required
+            autocomplete="email"
+          />
+        </div>
+
+        <!-- Champ Mot de passe avec bouton afficher/cacher -->
+        <div class="login-groupe">
+          <label for="admin-mdp">
+            <i class="fa-solid fa-lock"></i> Mot de passe
+          </label>
+          <div class="mdp-wrap">
+            <input
+              type="password"
+              id="admin-mdp"
+              placeholder="••••••••••"
+              required
+              autocomplete="current-password"
+            />
+            <!-- Bouton œil : affiche/cache le mot de passe -->
+            <button
+              type="button"
+              class="btn-oeil"
+              onclick="toggleMdp()"
+              aria-label="Afficher/Cacher le mot de passe"
+            >
+              <i class="fa-regular fa-eye" id="icone-oeil"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Option "Se souvenir de moi" -->
+        <div class="login-option">
+          <label class="checkbox-label">
+            <input type="checkbox" id="souvenir" />
+            <span class="checkbox-custom"></span>
+            Se souvenir de moi
+          </label>
+          <a href="#" class="lien-mdp-oublie">Mot de passe oublié ?</a>
+        </div>
+
+        <!-- Bouton de connexion -->
+        <button type="submit" class="btn-login" id="btn-login">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Se connecter
+          <!-- Spinner visible pendant la vérification -->
+          <span class="login-spinner" id="login-spinner"></span>
+        </button>
+
+      </form>
+
+    </div><!-- fin login-boite -->
+  </div><!-- fin login-page -->
+
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       DASHBOARD PRINCIPAL
+       Caché par défaut, affiché après connexion réussie
+  ══════════════════════════════════════════════════════════════════════ -->
+  <div class="dashboard" id="dashboard">
+
+    <!-- ── BARRE LATÉRALE (SIDEBAR) ────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+
+      <!-- Logo dans la sidebar -->
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icone">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <div class="sidebar-logo-texte">
+          <span class="slt-gasikara">GASIKARA</span>
+          <span class="slt-hotel">HOTEL</span>
+        </div>
+        <!-- Bouton pour réduire la sidebar sur mobile -->
+        <button class="sidebar-fermer" id="sidebar-fermer" onclick="toggleSidebar()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Label de navigation -->
+      <div class="sidebar-label">NAVIGATION</div>
+
+      <!-- Menu de navigation de la sidebar -->
+      <nav class="sidebar-nav">
+
+        <!-- Chaque item : icône + texte + data-section pour JS -->
+        <a href="#" class="sidebar-item actif" data-section="tableau-bord" onclick="changerSection(this)">
+          <div class="sidebar-item-icone"><i class="fa-solid fa-chart-pie"></i></div>
+          <span>Tableau de bord</span>
+          <!-- Badge nombre de notifications -->
+          <span class="sidebar-badge" id="badge-tb">0</span>
+        </a>
+
+        <a href="#" class="sidebar-item" data-section="reservations" onclick="changerSection(this)">
+          <div class="sidebar-item-icone"><i class="fa-regular fa-calendar-check"></i></div>
+          <span>Réservations</span>
+          <span class="sidebar-badge urgent" id="badge-res">0</span>
+        </a>
+
+        <a href="#" class="sidebar-item" data-section="hotels" onclick="changerSection(this)">
+          <div class="sidebar-item-icone"><i class="fa-solid fa-building"></i></div>
+          <span>Hôtels & Provinces</span>
+        </a>
+
+        <a href="#" class="sidebar-item" data-section="chambres" onclick="changerSection(this)">
+          <div class="sidebar-item-icone"><i class="fa-solid fa-bed"></i></div>
+          <span>Chambres</span>
+        </a>
+
+        <a href="#" class="sidebar-item" data-section="clients" onclick="changerSection(this)">
+          <div class="sidebar-item-icone"><i class="fa-solid fa-users"></i></div>
+          <span>Clients</span>
+        </a>
+
+        <a href="#" class="sidebar-item" data-section="statistiques" onclick="changerSection(this)">
+          <div class="sidebar-item-icone"><i class="fa-solid fa-chart-line"></i></div>
+          <span>Statistiques</span>
+        </a>
+
+      </nav>
+
+      <!-- Séparateur -->
+      <div class="sidebar-sep"></div>
+      <div class="sidebar-label">SYSTÈME</div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="sidebar-item" data-section="parametres" onclick="changerSection(this)">
+          <div class="sidebar-item-icone"><i class="fa-solid fa-gear"></i></div>
+          <span>Paramètres</span>
+        </a>
+        <!-- Lien vers le site public -->
+        <a href="../index.html" class="sidebar-item" target="_blank">
+          <div class="sidebar-item-icone"><i class="fa-solid fa-globe"></i></div>
+          <span>Voir le site</span>
+          <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:.65rem;margin-left:auto;opacity:.5"></i>
+        </a>
+        <!-- Bouton de déconnexion -->
+        <a href="#" class="sidebar-item deconnexion" onclick="deconnecter()">
+          <div class="sidebar-item-icone"><i class="fa-solid fa-right-from-bracket"></i></div>
+          <span>Déconnexion</span>
+        </a>
+      </nav>
+
+      <!-- Profil admin en bas de la sidebar -->
+      <div class="sidebar-profil">
+        <div class="profil-avatar">AD</div>
+        <div class="profil-info">
+          <div class="profil-nom" id="profil-nom">Administrateur</div>
+          <div class="profil-role">Super Admin</div>
+        </div>
+        <div class="profil-statut"></div>
+      </div>
+
+    </aside><!-- fin sidebar -->
+
+
+    <!-- ── CONTENU PRINCIPAL ────────────────────────────────────────── -->
+    <main class="contenu-principal" id="contenu-principal">
+
+      <!-- ── EN-TÊTE DU DASHBOARD ──────────────────────────────────── -->
+      <header class="dash-header">
+
+        <!-- Bouton hamburger pour mobile -->
+        <button class="btn-sidebar-toggle" onclick="toggleSidebar()">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- Titre de la section active (mis à jour par JS) -->
+        <div class="dash-header-titre">
+          <h1 id="titre-section">Tableau de bord</h1>
+          <!-- Fil d'Ariane -->
+          <p id="sous-titre-section">GasikaraHotel · Vue globale</p>
+        </div>
+
+        <!-- Actions de l'en-tête -->
+        <div class="dash-header-actions">
+
+          <!-- Barre de recherche globale -->
+          <div class="recherche-globale">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              placeholder="Rechercher..."
+              id="recherche-globale"
+              oninput="rechercheGlobale(this.value)"
+            />
+          </div>
+
+          <!-- Bouton notifications -->
+          <button class="btn-notif" onclick="toggleNotifications()">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notif-badge" id="notif-badge">3</span>
+          </button>
+
+          <!-- Panel de notifications (toggle) -->
+          <div class="notif-panel" id="notif-panel">
+            <div class="notif-panel-titre">
+              Notifications
+              <button onclick="marquerToutLu()">Tout lire</button>
+            </div>
+            <!-- Les notifications sont injectées par JS -->
+            <div id="notif-liste"></div>
+          </div>
+
+          <!-- Avatar admin avec menu -->
+          <div class="admin-avatar" onclick="toggleMenuAdmin()">
+            <span>AD</span>
+          </div>
+          <!-- Menu admin -->
+          <div class="menu-admin" id="menu-admin">
+            <a href="#" onclick="changerSectionParNom('parametres')">
+              <i class="fa-solid fa-gear"></i> Paramètres
+            </a>
+            <a href="#" onclick="deconnecter()">
+              <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
+            </a>
+          </div>
+
+        </div>
+      </header><!-- fin dash-header -->
+
+
+      <!-- ════════════════════════════════════════════════════════════
+           SECTION 1 : TABLEAU DE BORD (vue globale)
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="section-contenu actif" id="section-tableau-bord">
+
+        <!-- Bandeau de bienvenue -->
+        <div class="bienvenue-bandeau">
+          <div>
+            <h2 class="bienvenue-titre">Bonjour, <span id="bienvenue-prenom">Admin</span> 👋</h2>
+            <p class="bienvenue-sous">Voici le résumé de GasikaraHotel aujourd'hui</p>
+          </div>
+          <!-- Date et heure en temps réel -->
+          <div class="bienvenue-date" id="bienvenue-date"></div>
+        </div>
+
+        <!-- ── CARTES KPI (Key Performance Indicators) ──────────── -->
+        <!-- 4 cartes avec les chiffres clés -->
+        <div class="kpi-grille">
+
+          <!-- KPI 1 : Total réservations -->
+          <div class="kpi-carte">
+            <div class="kpi-icone vert">
+              <i class="fa-regular fa-calendar-check"></i>
+            </div>
+            <div class="kpi-info">
+              <div class="kpi-valeur" id="kpi-total-res">0</div>
+              <div class="kpi-label">Total Réservations</div>
+              <div class="kpi-tendance hausse">
+                <i class="fa-solid fa-arrow-trend-up"></i> +12% ce mois
+              </div>
+            </div>
+          </div>
+
+          <!-- KPI 2 : Réservations en attente -->
+          <div class="kpi-carte">
+            <div class="kpi-icone orange">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <div class="kpi-info">
+              <div class="kpi-valeur" id="kpi-attente">0</div>
+              <div class="kpi-label">En Attente</div>
+              <div class="kpi-tendance neutre">
+                <i class="fa-solid fa-circle-exclamation"></i> À traiter
+              </div>
+            </div>
+          </div>
+
+          <!-- KPI 3 : Revenus du mois -->
+          <div class="kpi-carte">
+            <div class="kpi-icone bleu">
+              <i class="fa-solid fa-coins"></i>
+            </div>
+            <div class="kpi-info">
+              <div class="kpi-valeur" id="kpi-revenus">0</div>
+              <div class="kpi-label">Revenus (Ar)</div>
+              <div class="kpi-tendance hausse">
+                <i class="fa-solid fa-arrow-trend-up"></i> +8% ce mois
+              </div>
+            </div>
+          </div>
+
+          <!-- KPI 4 : Total clients -->
+          <div class="kpi-carte">
+            <div class="kpi-icone violet">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <div class="kpi-info">
+              <div class="kpi-valeur" id="kpi-clients">0</div>
+              <div class="kpi-label">Clients Enregistrés</div>
+              <div class="kpi-tendance hausse">
+                <i class="fa-solid fa-arrow-trend-up"></i> +5 cette semaine
+              </div>
+            </div>
+          </div>
+
+        </div><!-- fin kpi-grille -->
+
+        <!-- ── LIGNE : Graphique + Réservations récentes ─────────── -->
+        <div class="dash-grille-2">
+
+          <!-- Graphique des réservations par mois -->
+          <div class="dash-carte">
+            <div class="dash-carte-titre">
+              <span>Réservations par mois</span>
+              <!-- Sélecteur d'année -->
+              <select onchange="mettreAJourGraphique(this.value)" class="select-annee">
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+              </select>
+            </div>
+            <!-- Canvas Chart.js pour le graphique en barres -->
+            <div class="graphique-wrap">
+              <canvas id="graphique-reservations"></canvas>
+            </div>
+          </div>
+
+          <!-- Réservations récentes (dernières 5) -->
+          <div class="dash-carte">
+            <div class="dash-carte-titre">
+              <span>Réservations récentes</span>
+              <!-- Lien vers la section réservations -->
+              <button class="btn-voir-tout" onclick="changerSectionParNom('reservations')">
+                Voir tout <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+            <!-- Liste injectée par JS -->
+            <div id="liste-res-recentes"></div>
+          </div>
+
+        </div><!-- fin dash-grille-2 -->
+
+        <!-- ── LIGNE : Répartition par hôtel + Taux d'occupation ─── -->
+        <div class="dash-grille-2">
+
+          <!-- Graphique en donut : réservations par hôtel -->
+          <div class="dash-carte">
+            <div class="dash-carte-titre">
+              <span>Répartition par hôtel</span>
+            </div>
+            <div class="graphique-wrap graphique-donut">
+              <canvas id="graphique-hotels"></canvas>
+            </div>
+          </div>
+
+          <!-- Taux d'occupation par province -->
+          <div class="dash-carte">
+            <div class="dash-carte-titre">
+              <span>Taux d'occupation par province</span>
+            </div>
+            <!-- Barres de progression par province -->
+            <div id="occupation-barres"></div>
+          </div>
+
+        </div>
+
+      </section><!-- fin section-tableau-bord -->
+
+
+      <!-- ════════════════════════════════════════════════════════════
+           SECTION 2 : GESTION DES RÉSERVATIONS
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="section-contenu" id="section-reservations">
+
+        <!-- Barre d'outils : filtres + bouton ajouter -->
+        <div class="toolbar">
+          <!-- Filtres de statut -->
+          <div class="toolbar-filtres">
+            <button class="filtre-statut actif" data-statut="tous" onclick="filtrerReservations('tous',this)">
+              Toutes
+            </button>
+            <button class="filtre-statut" data-statut="en_attente" onclick="filtrerReservations('en_attente',this)">
+              <span class="dot orange"></span> En attente
+            </button>
+            <button class="filtre-statut" data-statut="confirmee" onclick="filtrerReservations('confirmee',this)">
+              <span class="dot vert"></span> Confirmées
+            </button>
+            <button class="filtre-statut" data-statut="annulee" onclick="filtrerReservations('annulee',this)">
+              <span class="dot rouge"></span> Annulées
+            </button>
+          </div>
+
+          <!-- Filtre par hôtel -->
+          <select class="select-filtre" id="filtre-hotel-res" onchange="filtrerReservations()">
+            <option value="">Tous les hôtels</option>
+            <option value="1">Tana</option>
+            <option value="2">Tamatave</option>
+            <option value="3">Majunga</option>
+            <option value="4">Fianar</option>
+            <option value="5">Tuléar</option>
+            <option value="6">Diego</option>
+          </select>
+
+          <!-- Bouton nouvelle réservation -->
+          <button class="btn-ajouter" onclick="ouvrirModalRes(null)">
+            <i class="fa-solid fa-plus"></i> Nouvelle réservation
+          </button>
+        </div>
+
+        <!-- Tableau des réservations -->
+        <div class="tableau-wrap">
+          <table class="tableau" id="tableau-reservations">
+            <thead>
+              <tr>
+                <th>Référence</th>
+                <th>Client</th>
+                <th>Hôtel</th>
+                <th>Chambre</th>
+                <th>Arrivée</th>
+                <th>Départ</th>
+                <th>Nuits</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <!-- Le corps est injecté dynamiquement par JS -->
+            <tbody id="corps-tableau-res"></tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination-res"></div>
+
+      </section><!-- fin section-reservations -->
+
+
+      <!-- ════════════════════════════════════════════════════════════
+           SECTION 3 : GESTION DES HÔTELS (6 PROVINCES)
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="section-contenu" id="section-hotels">
+
+        <div class="toolbar">
+          <h3 style="font-family:'Syne',sans-serif;font-size:1.1rem;">
+            Les 6 Hôtels GasikaraHotel
+          </h3>
+          <button class="btn-ajouter" onclick="ouvrirModalHotel(null)">
+            <i class="fa-solid fa-plus"></i> Ajouter un hôtel
+          </button>
+        </div>
+
+        <!-- Grille des cartes hôtels -->
+        <div class="grille-hotels-admin" id="grille-hotels-admin">
+          <!-- Injecté par JS depuis DONNEES_HOTELS -->
+        </div>
+
+      </section><!-- fin section-hotels -->
+
+
+      <!-- ════════════════════════════════════════════════════════════
+           SECTION 4 : GESTION DES CHAMBRES
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="section-contenu" id="section-chambres">
+
+        <div class="toolbar">
+          <!-- Filtre par hôtel -->
+          <select class="select-filtre" id="filtre-hotel-ch" onchange="filtrerChambresPar(this.value)">
+            <option value="">Toutes les provinces</option>
+            <option value="1">Tana</option>
+            <option value="2">Tamatave</option>
+            <option value="3">Majunga</option>
+            <option value="4">Fianar</option>
+            <option value="5">Tuléar</option>
+            <option value="6">Diego</option>
+          </select>
+          <!-- Filtre par type -->
+          <select class="select-filtre" onchange="filtrerChambresPar()">
+            <option value="">Tous les types</option>
+            <option value="standard">Standard</option>
+            <option value="superieure">Supérieure</option>
+            <option value="suite">Suite</option>
+            <option value="presidentielle">Présidentielle</option>
+          </select>
+          <button class="btn-ajouter" onclick="ouvrirModalChambre(null)">
+            <i class="fa-solid fa-plus"></i> Ajouter une chambre
+          </button>
+        </div>
+
+        <!-- Tableau des chambres -->
+        <div class="tableau-wrap">
+          <table class="tableau" id="tableau-chambres">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Hôtel</th>
+                <th>Nom</th>
+                <th>Type</th>
+                <th>Prix / nuit</th>
+                <th>Surface</th>
+                <th>Capacité</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="corps-tableau-ch"></tbody>
+          </table>
+        </div>
+
+      </section><!-- fin section-chambres -->
+
+
+      <!-- ════════════════════════════════════════════════════════════
+           SECTION 5 : GESTION DES CLIENTS
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="section-contenu" id="section-clients">
+
+        <div class="toolbar">
+          <!-- Recherche client -->
+          <div class="recherche-inline">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Rechercher un client..." oninput="rechercherClient(this.value)" />
+          </div>
+          <button class="btn-ajouter" onclick="ouvrirModalClient(null)">
+            <i class="fa-solid fa-user-plus"></i> Ajouter un client
+          </button>
+        </div>
+
+        <!-- Tableau des clients -->
+        <div class="tableau-wrap">
+          <table class="tableau">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nom complet</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Réservations</th>
+                <th>Inscription</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="corps-tableau-clients"></tbody>
+          </table>
+        </div>
+
+      </section><!-- fin section-clients -->
+
+
+      <!-- ════════════════════════════════════════════════════════════
+           SECTION 6 : STATISTIQUES & GRAPHIQUES
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="section-contenu" id="section-statistiques">
+
+        <!-- KPIs détaillés statistiques -->
+        <div class="kpi-grille">
+          <div class="kpi-carte">
+            <div class="kpi-icone vert"><i class="fa-solid fa-arrow-trend-up"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-valeur">87%</div>
+              <div class="kpi-label">Taux d'occupation moyen</div>
+            </div>
+          </div>
+          <div class="kpi-carte">
+            <div class="kpi-icone bleu"><i class="fa-solid fa-star"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-valeur">4.8/5</div>
+              <div class="kpi-label">Note moyenne clients</div>
+            </div>
+          </div>
+          <div class="kpi-carte">
+            <div class="kpi-icone orange"><i class="fa-solid fa-rotate"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-valeur">42%</div>
+              <div class="kpi-label">Taux de fidélisation</div>
+            </div>
+          </div>
+          <div class="kpi-carte">
+            <div class="kpi-icone violet"><i class="fa-solid fa-moon"></i></div>
+            <div class="kpi-info">
+              <div class="kpi-valeur">3.2</div>
+              <div class="kpi-label">Durée moy. séjour (nuits)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-grille-2">
+          <!-- Graphique revenus par mois -->
+          <div class="dash-carte">
+            <div class="dash-carte-titre"><span>Revenus mensuels (Ar)</span></div>
+            <div class="graphique-wrap">
+              <canvas id="graphique-revenus"></canvas>
+            </div>
+          </div>
+          <!-- Graphique types de chambres les plus réservées -->
+          <div class="dash-carte">
+            <div class="dash-carte-titre"><span>Chambres les plus réservées</span></div>
+            <div class="graphique-wrap">
+              <canvas id="graphique-types-ch"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Graphique pleine largeur : évolution sur 12 mois -->
+        <div class="dash-carte">
+          <div class="dash-carte-titre"><span>Évolution des réservations – 12 mois glissants</span></div>
+          <div class="graphique-wrap" style="height:280px">
+            <canvas id="graphique-evolution"></canvas>
+          </div>
+        </div>
+
+      </section><!-- fin section-statistiques -->
+
+
+      <!-- ════════════════════════════════════════════════════════════
+           SECTION 7 : PARAMÈTRES
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="section-contenu" id="section-parametres">
+
+        <div class="parametres-grille">
+
+          <!-- Paramètres du compte admin -->
+          <div class="dash-carte">
+            <div class="dash-carte-titre"><span>Mon Compte</span></div>
+            <div class="param-form">
+              <div class="param-groupe">
+                <label>Prénom</label>
+                <input type="text" value="Orlandon" id="param-prenom" />
+              </div>
+              <div class="param-groupe">
+                <label>Email</label>
+                <input type="email" value="nasyorlandon@gmail.com" id="param-email" />
+              </div>
+              <div class="param-groupe">
+                <label>Nouveau mot de passe</label>
+                <input type="password" placeholder="Laisser vide pour ne pas changer" />
+              </div>
+              <button class="btn-sauvegarder" onclick="afficherToastAdmin('Paramètres sauvegardés ✓','succes')">
+                <i class="fa-solid fa-floppy-disk"></i> Sauvegarder
+              </button>
+            </div>
+          </div>
+
+          <!-- Paramètres des notifications -->
+          <div class="dash-carte">
+            <div class="dash-carte-titre"><span>Notifications</span></div>
+            <div class="toggle-liste">
+              <div class="toggle-item">
+                <div>
+                  <div class="toggle-titre">Email à chaque réservation</div>
+                  <div class="toggle-desc">Recevoir un email quand une réservation est créée</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="toggle-item">
+                <div>
+                  <div class="toggle-titre">Alertes annulation</div>
+                  <div class="toggle-desc">Être notifié des annulations de réservations</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="toggle-item">
+                <div>
+                  <div class="toggle-titre">Rapport hebdomadaire</div>
+                  <div class="toggle-desc">Résumé des performances chaque lundi</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Paramètres généraux de l'hôtel -->
+          <div class="dash-carte">
+            <div class="dash-carte-titre"><span>Informations Générales</span></div>
+            <div class="param-form">
+              <div class="param-groupe">
+                <label>Nom de la chaîne</label>
+                <input type="text" value="GasikaraHotel" />
+              </div>
+              <div class="param-groupe">
+                <label>Email de contact</label>
+                <input type="email" value="gasikarahotel@gmail.com" />
+              </div>
+              <div class="param-groupe">
+                <label>Téléphone principal</label>
+                <input type="tel" value="+261 37 45 471 61" />
+              </div>
+              <button class="btn-sauvegarder" onclick="afficherToastAdmin('Informations mises à jour ✓','succes')">
+                <i class="fa-solid fa-floppy-disk"></i> Sauvegarder
+              </button>
+            </div>
+          </div>
+
+          <!-- Danger zone -->
+          <div class="dash-carte danger-zone">
+            <div class="dash-carte-titre"><span>Zone Dangereuse</span></div>
+            <p style="font-size:.85rem;color:var(--ad-discret);margin-bottom:1.5rem;">
+              Ces actions sont irréversibles. Procédez avec prudence.
+            </p>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+              <button class="btn-danger" onclick="confirmerAction('Vider le cache du système ?')">
+                <i class="fa-solid fa-broom"></i> Vider le cache
+              </button>
+              <button class="btn-danger" onclick="confirmerAction('Exporter toutes les données en CSV ?')">
+                <i class="fa-solid fa-file-export"></i> Exporter les données
+              </button>
+            </div>
+          </div>
+
+        </div><!-- fin parametres-grille -->
+      </section><!-- fin section-parametres -->
+
+    </main><!-- fin contenu-principal -->
+  </div><!-- fin dashboard -->
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       MODALS PARTAGÉS
+  ════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Modal Réservation (Ajouter / Modifier) -->
+  <div class="modal-fond" id="modal-reservation" onclick="fermerModal('modal-reservation',event)">
+    <div class="modal-boite">
+      <div class="modal-header">
+        <h3 id="modal-res-titre">Nouvelle réservation</h3>
+        <button class="modal-fermer" onclick="fermerModal('modal-reservation',null,true)">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grille-modal">
+          <div class="form-g"><label>Prénom *</label><input type="text" id="mr-prenom" /></div>
+          <div class="form-g"><label>Nom *</label><input type="text" id="mr-nom" /></div>
+          <div class="form-g"><label>Email *</label><input type="email" id="mr-email" /></div>
+          <div class="form-g"><label>Téléphone</label><input type="tel" id="mr-tel" /></div>
+          <div class="form-g"><label>Hôtel *</label>
+            <select id="mr-hotel">
+              <option value="1">GasikaraHotel Tana</option>
+              <option value="2">GasikaraHotel Tamatave</option>
+              <option value="3">GasikaraHotel Majunga</option>
+              <option value="4">GasikaraHotel Fianar</option>
+              <option value="5">GasikaraHotel Tuléar</option>
+              <option value="6">GasikaraHotel Diego</option>
+            </select>
+          </div>
+          <div class="form-g"><label>Type chambre *</label>
+            <select id="mr-chambre">
+              <option value="classique">Chambre Classique – 180 000 Ar</option>
+              <option value="baobab">Chambre Baobab – 320 000 Ar</option>
+              <option value="vanille">Suite Vanille – 750 000 Ar</option>
+              <option value="presidentielle">Suite Présidentielle – 1 500 000 Ar</option>
+            </select>
+          </div>
+          <div class="form-g"><label>Arrivée *</label><input type="date" id="mr-arrivee" /></div>
+          <div class="form-g"><label>Départ *</label><input type="date" id="mr-depart" /></div>
+          <div class="form-g"><label>Adultes</label>
+            <select id="mr-adultes">
+              <option>1</option><option selected>2</option><option>3</option><option>4</option>
+            </select>
+          </div>
+          <div class="form-g"><label>Statut</label>
+            <select id="mr-statut">
+              <option value="en_attente">En attente</option>
+              <option value="confirmee">Confirmée</option>
+              <option value="annulee">Annulée</option>
+            </select>
+          </div>
+          <div class="form-g col-plein"><label>Demandes spéciales</label>
+            <textarea id="mr-demandes" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-annuler" onclick="fermerModal('modal-reservation',null,true)">Annuler</button>
+        <button class="btn-sauvegarder" onclick="sauvegarderReservation()">
+          <i class="fa-solid fa-floppy-disk"></i> Sauvegarder
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Chambre (Ajouter / Modifier) -->
+  <div class="modal-fond" id="modal-chambre" onclick="fermerModal('modal-chambre',event)">
+    <div class="modal-boite">
+      <div class="modal-header">
+        <h3 id="modal-ch-titre">Nouvelle chambre</h3>
+        <button class="modal-fermer" onclick="fermerModal('modal-chambre',null,true)">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grille-modal">
+          <div class="form-g"><label>Hôtel *</label>
+            <select id="mch-hotel">
+              <option value="1">Tana</option><option value="2">Tamatave</option>
+              <option value="3">Majunga</option><option value="4">Fianar</option>
+              <option value="5">Tuléar</option><option value="6">Diego</option>
+            </select>
+          </div>
+          <div class="form-g"><label>Type *</label>
+            <select id="mch-type">
+              <option value="standard">Standard</option>
+              <option value="superieure">Supérieure</option>
+              <option value="suite">Suite</option>
+              <option value="presidentielle">Présidentielle</option>
+            </select>
+          </div>
+          <div class="form-g col-plein"><label>Nom de la chambre *</label>
+            <input type="text" id="mch-nom" placeholder="Ex: Suite Vanille" />
+          </div>
+          <div class="form-g"><label>Prix / nuit (Ar) *</label>
+            <input type="number" id="mch-prix" placeholder="180000" />
+          </div>
+          <div class="form-g"><label>Superficie (m²)</label>
+            <input type="number" id="mch-surface" placeholder="28" />
+          </div>
+          <div class="form-g"><label>Capacité (personnes)</label>
+            <input type="number" id="mch-capacite" placeholder="2" />
+          </div>
+          <div class="form-g"><label>Statut</label>
+            <select id="mch-statut">
+              <option value="1">Disponible</option>
+              <option value="0">Indisponible</option>
+            </select>
+          </div>
+          <div class="form-g col-plein"><label>Description</label>
+            <textarea id="mch-desc" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-annuler" onclick="fermerModal('modal-chambre',null,true)">Annuler</button>
+        <button class="btn-sauvegarder" onclick="sauvegarderChambre()">
+          <i class="fa-solid fa-floppy-disk"></i> Sauvegarder
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Confirmation de suppression -->
+  <div class="modal-fond" id="modal-confirm-supp" onclick="fermerModal('modal-confirm-supp',event)">
+    <div class="modal-boite modal-petit">
+      <div class="modal-header">
+        <h3>Confirmer la suppression</h3>
+        <button class="modal-fermer" onclick="fermerModal('modal-confirm-supp',null,true)">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align:center;padding:2rem;">
+        <div class="supp-icone"><i class="fa-solid fa-trash"></i></div>
+        <p id="supp-message" style="color:var(--ad-discret);font-size:.9rem;margin:1rem 0;">
+          Cette action est irréversible.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-annuler" onclick="fermerModal('modal-confirm-supp',null,true)">Annuler</button>
+        <button class="btn-danger" id="btn-confirm-supp">
+          <i class="fa-solid fa-trash"></i> Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification admin -->
+  <div class="admin-toast" id="admin-toast"></div>
+
+  <!-- Overlay sidebar mobile -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <!-- Lien vers le script JS du dashboard -->
+  <script src="admin.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1995 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   GASIKARAHOTEL – FEUILLE DE STYLES (style.css)
+   Auteur : GasikaraHotel Dev Team
+   Description : Styles complets pour le site de réservation hôtelière
+                 de la chaîne GasikaraHotel (6 provinces de Madagascar)
+═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   1. VARIABLES CSS GLOBALES
+   Centralisent toutes les couleurs, polices et mesures du site.
+   Modifier une variable ici = modifier partout où elle est utilisée.
+───────────────────────────────────────────────────────────────────── */
+:root {
+  /* Palette de couleurs principale */
+  --vert:        #2d6a4f;        /* Vert forêt : rappelle la nature malgache  */
+  --vert-clair:  #52b788;        /* Vert clair pour les accents               */
+  --vert-pale:   #d8f3dc;        /* Fond vert très pâle                       */
+  --or:          #e9c46a;        /* Or chaud : touches de luxe                */
+  --or-fonce:    #c99a2e;        /* Or foncé pour les hover                   */
+  --rouge:       #e76f51;        /* Corail/rouge pour les éléments chauds     */
+
+  /* Palette de gris et fonds */
+  --blanc:       #ffffff;
+  --creme:       #faf8f5;        /* Fond général légèrement chaud             */
+  --gris-clair:  #f0ede8;        /* Fond des sections alternées               */
+  --gris:        #9a9183;        /* Texte secondaire                          */
+  --gris-fonce:  #4a453e;        /* Texte sombre                              */
+  --noir:        #1a1714;        /* Texte très sombre et fonds sombres        */
+
+  /* Couleurs texte */
+  --texte:       #2c2825;        /* Couleur principale du texte               */
+  --discret:     #7a7268;        /* Texte secondaire discret                  */
+
+  /* Espacements et formes */
+  --rayon:       8px;            /* Rayon de bordure standard                 */
+  --rayon-lg:    16px;           /* Rayon pour les cartes larges              */
+  --ombre:       0 4px 24px rgba(0,0,0,0.10);   /* Ombre légère              */
+  --ombre-forte: 0 12px 48px rgba(0,0,0,0.18);  /* Ombre plus prononcée      */
+
+  /* Transitions */
+  --transition:  0.3s cubic-bezier(0.4, 0, 0.2, 1);  /* Animation standard   */
+  --transition-lente: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Typographie */
+  --font-titre:  'Playfair Display', Georgia, serif;
+  --font-corps:  'Jost', 'Segoe UI', sans-serif;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   2. RESET & BASE
+   Supprime les styles par défaut du navigateur et pose les bases
+───────────────────────────────────────────────────────────────────── */
+
+/* Tous les éléments : reset marges/paddings, border-box */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Les paddings/borders sont inclus dans la taille */
+}
+
+/* Défilement fluide pour les ancres (#section) */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px; /* Base de calcul pour rem                               */
+}
+
+/* Corps de la page */
+body {
+  font-family: var(--font-corps);
+  background-color: var(--creme);
+  color: var(--texte);
+  line-height: 1.65;
+  overflow-x: hidden; /* Empêche le défilement horizontal non voulu         */
+}
+
+/* Supprime la décoration des liens */
+a { text-decoration: none; color: inherit; }
+
+/* Les images s'adaptent à leur conteneur et s'affichent en bloc */
+img { max-width: 100%; display: block; }
+
+/* Supprime le style natif des listes */
+ul { list-style: none; }
+
+/* Les boutons héritent de la police et du curseur */
+button { font-family: var(--font-corps); cursor: pointer; }
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   3. PRELOADER (ÉCRAN DE CHARGEMENT)
+   Affiché au démarrage, masqué par JS après chargement
+───────────────────────────────────────────────────────────────────── */
+
+/* Fond plein écran du preloader */
+#preloader {
+  position: fixed;          /* Fixe : reste visible même au défilement       */
+  inset: 0;                 /* Couvre tout l'écran (top/right/bottom/left: 0) */
+  background: var(--vert);  /* Fond vert de la marque                        */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;            /* Au-dessus de tout le reste                    */
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+/* État caché du preloader (classe ajoutée par JS) */
+#preloader.masque {
+  opacity: 0;
+  visibility: hidden; /* Inaccessible aux clics et lecteurs d'écran         */
+}
+
+/* Logo dans le preloader */
+.preloader-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* Nom de la marque dans le preloader */
+.pre-gasikara {
+  font-family: var(--font-titre);
+  font-size: 2.5rem;
+  color: var(--or);          /* Or sur fond vert                            */
+  letter-spacing: 0.2em;
+  font-weight: 700;
+}
+
+/* Sous-titre "HOTEL" dans le preloader */
+.pre-hotel {
+  font-size: 0.9rem;
+  letter-spacing: 0.5em;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+}
+
+/* Barre de progression animée */
+.preloader-barre {
+  width: 200px;
+  height: 2px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+/* Partie remplie de la barre (animation infinie) */
+.preloader-barre-inner {
+  height: 100%;
+  background: var(--or);
+  border-radius: 2px;
+  animation: charger 1.8s ease infinite; /* Animation de va-et-vient        */
+}
+
+/* Keyframe : la barre se remplit de gauche à droite */
+@keyframes charger {
+  0%   { width: 0; margin-left: 0; }
+  50%  { width: 100%; margin-left: 0; }
+  100% { width: 0; margin-left: 100%; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   4. BARRE DE NAVIGATION
+───────────────────────────────────────────────────────────────────── */
+
+/* Barre de navigation fixe en haut de la page */
+#navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;              /* Au-dessus du contenu mais sous les modals   */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 5vw;
+  background: transparent;    /* Transparent au départ, change au scroll     */
+  transition: background var(--transition), padding var(--transition),
+              box-shadow var(--transition);
+}
+
+/* Navigation scrollée (classe ajoutée par JS) */
+#navbar.scrolled {
+  background: rgba(255,255,255,0.97); /* Fond blanc semi-opaque              */
+  padding: 0.7rem 5vw;        /* Réduit la hauteur                           */
+  box-shadow: var(--ombre);
+}
+
+/* Logo dans la navbar */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Icône feuille du logo */
+.nav-logo-icone {
+  color: var(--vert-clair);
+  font-size: 1.4rem;
+}
+
+/* "GASIKARA" dans le logo */
+.logo-gasikara {
+  font-family: var(--font-titre);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--blanc);        /* Blanc sur le hero (fond sombre)             */
+  letter-spacing: 0.08em;
+  transition: color var(--transition);
+}
+
+/* "HOTEL" dans le logo */
+.logo-hotel {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: var(--or);
+  align-self: flex-end;
+  margin-bottom: 2px;
+}
+
+/* Quand la nav est scrollée : logo devient vert */
+#navbar.scrolled .logo-gasikara { color: var(--vert); }
+
+/* Conteneur des liens de navigation */
+.nav-liens {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Lien de navigation individuel */
+.nav-lien {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.9); /* Blanc sur le hero                        */
+  position: relative;
+  padding-bottom: 2px;
+  transition: color var(--transition);
+}
+
+/* Ligne animée sous le lien au survol */
+.nav-lien::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: var(--or);
+  transition: width var(--transition);
+}
+
+/* Survol et état actif des liens */
+.nav-lien:hover,
+.nav-lien.actif { color: var(--or); }
+.nav-lien:hover::after,
+.nav-lien.actif::after { width: 100%; }
+
+/* Quand la nav est scrollée : liens en vert */
+#navbar.scrolled .nav-lien {
+  color: var(--gris-fonce);
+}
+#navbar.scrolled .nav-lien:hover,
+#navbar.scrolled .nav-lien.actif { color: var(--vert); }
+
+/* Bouton "Réserver" dans la navbar */
+.btn-nav-reserv {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.4rem;
+  background: var(--or);
+  color: var(--noir) !important;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.btn-nav-reserv:hover {
+  background: var(--or-fonce);
+  transform: translateY(-2px);
+}
+
+/* Bouton burger (menu mobile) */
+.burger {
+  display: none; /* Caché sur desktop, visible sur mobile                   */
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 4px;
+  z-index: 1001;
+}
+
+/* Barres du burger */
+.burger-barre {
+  display: block;
+  width: 26px; height: 2px;
+  background: var(--blanc);
+  border-radius: 2px;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+/* Barres deviennent vertes quand la nav est scrollée */
+#navbar.scrolled .burger-barre { background: var(--vert); }
+
+/* Animation du burger en X quand ouvert */
+.burger.ouvert .burger-barre:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.burger.ouvert .burger-barre:nth-child(2) {
+  opacity: 0;
+}
+.burger.ouvert .burger-barre:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   5. SECTION HERO (ACCUEIL)
+   Image de fond plein écran avec texte centré
+───────────────────────────────────────────────────────────────────── */
+
+/* Conteneur principal du hero */
+.hero {
+  position: relative;
+  min-height: 100vh;          /* Prend toute la hauteur de la fenêtre       */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+/* Fond du hero : image + dégradé */
+.hero-fond {
+  position: absolute;
+  inset: 0;
+  /* Dégradé sombre pour la lisibilité, puis image de Madagascar */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(10, 40, 20, 0.75) 0%,
+      rgba(45, 106, 79, 0.55) 50%,
+      rgba(10, 30, 15, 0.80) 100%
+    ),
+    
+    url('../img/img acceuil.jpg')
+    center/cover no-repeat;
+  animation: heroZoom 20s ease infinite alternate; /* Zoom lent du fond      */
+}
+
+/* Animation de zoom lent du fond du hero */
+@keyframes heroZoom {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+
+/* Particules décoratives dans le hero (positionnées par JS) */
+.hero-particules {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* Les particules ne bloquent pas les clics          */
+}
+
+/* Particule individuelle */
+.particule {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(233, 196, 106, 0.25); /* Or transparent                  */
+  animation: flotter var(--dur, 8s) ease-in-out infinite var(--delay, 0s);
+}
+
+/* Animation de flottement des particules */
+@keyframes flotter {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+  50%       { transform: translateY(-30px) scale(1.1); opacity: 0.7; }
+}
+
+/* Contenu textuel du hero */
+.hero-contenu {
+  position: relative;  /* Au-dessus du fond                                  */
+  z-index: 2;
+  max-width: 850px;
+  padding-top: 80px;   /* Espace pour la navbar fixe                         */
+}
+
+/* Badge / étiquette au-dessus du titre */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(233, 196, 106, 0.15);
+  border: 1px solid rgba(233, 196, 106, 0.4);
+  color: var(--or);
+  padding: 0.4rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.8rem;
+  animation: fadeDown 0.8s ease both; /* Animation d'entrée                  */
+}
+
+/* Titre principal du hero en 3 lignes */
+.hero-titre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-titre);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+/* Première ligne du titre */
+.titre-ligne-1 {
+  font-size: clamp(2rem, 5vw, 3.5rem); /* Taille fluide selon la fenêtre    */
+  font-weight: 400;
+  color: rgba(255,255,255,0.85);
+  animation: fadeLeft 0.9s ease 0.2s both; /* Entrée décalée                */
+}
+
+/* Deuxième ligne : nom de la marque */
+.titre-ligne-2 {
+  font-size: clamp(3rem, 8vw, 6rem);   /* Très grand pour l'impact          */
+  font-weight: 700;
+  font-style: italic;
+  color: var(--or);                     /* Couleur or                        */
+  animation: fadeLeft 0.9s ease 0.4s both;
+}
+
+/* Troisième ligne du titre */
+.titre-ligne-3 {
+  font-size: clamp(1.5rem, 4vw, 2.8rem);
+  font-weight: 300;
+  color: rgba(255,255,255,0.8);
+  animation: fadeLeft 0.9s ease 0.6s both;
+}
+
+/* Sous-titre du hero */
+.hero-sous-titre {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.75);
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+  font-weight: 300;
+  animation: fadeUp 0.9s ease 0.8s both;
+}
+
+/* Groupe de boutons d'action */
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3.5rem;
+  animation: fadeUp 0.9s ease 1s both;
+}
+
+/* Statistiques du hero (4 chiffres) */
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 0.9s ease 1.2s both;
+}
+
+/* Item statistique individuel */
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+/* Nombre de la statistique */
+.stat-num {
+  font-family: var(--font-titre);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--or);
+}
+
+/* Label de la statistique */
+.stat-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+/* Séparateur vertical entre les stats */
+.stat-sep {
+  width: 1px;
+  height: 40px;
+  background: rgba(255,255,255,0.2);
+}
+
+/* Indicateur de défilement en bas du hero */
+.hero-scroll-indic {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.6);
+  font-size: 1.2rem;
+  animation: rebondir 2s ease infinite; /* Animation de rebond               */
+  z-index: 2;
+}
+
+/* Animation de rebond vertical */
+@keyframes rebondir {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(8px); }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   6. BOUTONS GÉNÉRIQUES
+───────────────────────────────────────────────────────────────────── */
+
+/* Style de base de tous les boutons .btn */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  border-radius: 50px;        /* Forme pilule arrondie                       */
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+/* Bouton primaire : fond vert */
+.btn-primaire {
+  background: var(--vert);
+  color: var(--blanc);
+  border-color: var(--vert);
+}
+.btn-primaire:hover {
+  background: var(--vert-clair);
+  border-color: var(--vert-clair);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(45,106,79,0.35);
+}
+
+/* Bouton outline : contour blanc */
+.btn-outline {
+  background: transparent;
+  color: var(--blanc);
+  border-color: rgba(255,255,255,0.7);
+}
+.btn-outline:hover {
+  background: var(--blanc);
+  color: var(--vert);
+  border-color: var(--blanc);
+  transform: translateY(-2px);
+}
+
+/* Bouton petit format */
+.btn-sm {
+  padding: 0.55rem 1.4rem;
+  font-size: 0.8rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   7. WIDGET DE RECHERCHE DE DISPONIBILITÉS
+───────────────────────────────────────────────────────────────────── */
+
+/* Section du widget */
+.widget-section {
+  background: var(--vert);
+  padding: 0;
+}
+
+/* Conteneur interne du widget */
+.widget-conteneur {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.8rem 5vw;
+}
+
+/* Titre du widget */
+.widget-titre {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Formulaire de recherche rapide */
+.widget-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto; /* 5 colonnes de largeurs différentes */
+  gap: 1rem;
+  align-items: end;
+}
+
+/* Champ individuel du widget */
+.widget-champ {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* Label du champ widget */
+.widget-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Input et select du widget */
+.widget-input {
+  padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.12); /* Fond semi-transparent               */
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--rayon);
+  color: var(--blanc);
+  font-family: var(--font-corps);
+  font-size: 0.9rem;
+  transition: border-color var(--transition), background var(--transition);
+  appearance: none; /* Supprime le style natif du select                     */
+}
+
+.widget-input::placeholder { color: rgba(255,255,255,0.5); }
+.widget-input option { background: var(--vert); color: var(--blanc); }
+
+/* Focus sur les champs widget */
+.widget-input:focus {
+  outline: none;
+  border-color: var(--or);
+  background: rgba(255,255,255,0.18);
+}
+
+/* Bouton de recherche du widget */
+.widget-btn {
+  padding: 0.75rem 2rem;
+  background: var(--or);
+  color: var(--noir);
+  border: none;
+  border-radius: var(--rayon);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+
+.widget-btn:hover {
+  background: var(--or-fonce);
+  transform: translateY(-2px);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   8. STYLES COMMUNS DES SECTIONS
+───────────────────────────────────────────────────────────────────── */
+
+/* Padding par défaut pour toutes les sections */
+section { padding: 5rem 5vw; }
+
+/* En-tête de section (label + titre + description) */
+.en-tete-section {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Label coloré au-dessus du titre */
+.label-section {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--vert);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+/* Titre principal des sections */
+.titre-section {
+  font-family: var(--font-titre);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--texte);
+  line-height: 1.2;
+}
+
+/* Italique de couleur dans les titres */
+.titre-section em {
+  font-style: italic;
+  color: var(--vert);
+}
+
+/* Description sous le titre de section */
+.desc-section {
+  margin-top: 0.8rem;
+  font-size: 0.93rem;
+  color: var(--discret);
+  line-height: 1.7;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   9. SECTION HÔTELS (6 PROVINCES)
+───────────────────────────────────────────────────────────────────── */
+
+/* Section des hôtels : fond blanc */
+.section-hotels {
+  background: var(--blanc);
+}
+
+/* Grille des 6 hôtels : 3 colonnes sur desktop, responsive */
+.grille-hotels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colonnes égales               */
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Carte d'hôtel individuelle */
+.carte-hotel {
+  background: var(--blanc);
+  border-radius: var(--rayon-lg);
+  overflow: hidden;           /* Cache les débordements de l'image           */
+  box-shadow: var(--ombre);
+  transition: transform var(--transition-lente), box-shadow var(--transition-lente);
+  cursor: pointer;            /* Curseur main pour indiquer la cliquabilité  */
+}
+
+/* Élévation au survol */
+.carte-hotel:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--ombre-forte);
+}
+
+/* Image de fond de l'hôtel (div avec background-image) */
+.hotel-image {
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  transition: transform var(--transition-lente);
+  overflow: hidden;
+}
+
+/* Zoom de l'image au survol */
+.carte-hotel:hover .hotel-image {
+  transform: scale(1.05);
+}
+
+/* Dégradé sombre en bas de l'image pour les textes */
+.hotel-image::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60%;
+  background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+}
+
+/* Badge "5 Étoiles" sur l'image */
+.hotel-badge {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  z-index: 1;               /* Au-dessus du dégradé ::after                  */
+  background: rgba(233,196,106,0.9);
+  color: var(--noir);
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* Numéro de l'hôtel (01, 02...) */
+.hotel-num {
+  position: absolute;
+  bottom: 1rem; right: 1rem;
+  z-index: 1;
+  font-family: var(--font-titre);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.25);
+  line-height: 1;
+}
+
+/* Corps textuel de la carte hôtel */
+.hotel-corps {
+  padding: 1.5rem;
+}
+
+/* Province et ville de l'hôtel */
+.hotel-province {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vert);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Nom de l'hôtel */
+.hotel-nom {
+  font-family: var(--font-titre);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--texte);
+  margin-bottom: 0.5rem;
+}
+
+/* Description courte de l'hôtel */
+.hotel-desc {
+  font-size: 0.83rem;
+  color: var(--discret);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Équipements de l'hôtel (icônes + texte) */
+.hotel-equip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+/* Équipement individuel */
+.hotel-equip span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  color: var(--discret);
+  background: var(--gris-clair);
+  padding: 0.2rem 0.6rem;
+  border-radius: 50px;
+}
+
+.hotel-equip i { color: var(--vert); }
+
+/* Pied de la carte : prix + bouton */
+.hotel-pied {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--gris-clair);
+}
+
+/* Bloc prix */
+.hotel-prix { display: flex; align-items: baseline; gap: 0.3rem; }
+.prix-depuis { font-size: 0.7rem; color: var(--discret); }
+.prix-montant {
+  font-family: var(--font-titre);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--vert);
+}
+.prix-unite { font-size: 0.7rem; color: var(--discret); }
+
+/* Bouton "Découvrir" */
+.btn-decouvrir {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.2rem;
+  background: var(--vert);
+  color: var(--blanc);
+  border: none;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: all var(--transition);
+}
+
+.btn-decouvrir:hover {
+  background: var(--vert-clair);
+  transform: translateX(4px); /* Glisse vers la droite au survol             */
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   10. SECTION CHAMBRES
+───────────────────────────────────────────────────────────────────── */
+
+/* Section chambres avec fond légèrement coloré */
+.section-chambres {
+  background: var(--gris-clair);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fond décoratif (motif) de la section */
+.chambres-fond {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(45,106,79,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(233,196,106,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Wrapper du contenu chambres */
+.chambres-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Filtres de type de chambre */
+.chambres-filtres {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+/* Bouton filtre individuel */
+.filtre-btn {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid var(--vert);
+  background: transparent;
+  color: var(--vert);
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: all var(--transition);
+}
+
+/* Bouton filtre actif et survol */
+.filtre-btn.actif,
+.filtre-btn:hover {
+  background: var(--vert);
+  color: var(--blanc);
+}
+
+/* Grille des chambres */
+.grille-chambres {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Carte de chambre individuelle */
+.carte-chambre {
+  background: var(--blanc);
+  border-radius: var(--rayon-lg);
+  overflow: hidden;
+  box-shadow: var(--ombre);
+  transition: transform var(--transition-lente), box-shadow var(--transition-lente), opacity 0.4s ease;
+}
+
+/* État masqué des chambres filtrées */
+.carte-chambre.masque {
+  display: none; /* Le filtre JS cache les chambres non sélectionnées        */
+}
+
+.carte-chambre:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--ombre-forte);
+}
+
+/* Conteneur de l'image de la chambre */
+.chambre-img-wrap {
+  position: relative;
+  height: 230px;
+  overflow: hidden;
+}
+
+/* Image de la chambre */
+.chambre-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;           /* Remplit sans déformer                      */
+  transition: transform 0.5s ease;
+}
+
+.carte-chambre:hover .chambre-img { transform: scale(1.06); }
+
+/* Overlay au survol de la chambre */
+.chambre-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(45,106,79,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.chambre-img-wrap:hover .chambre-overlay { opacity: 1; }
+
+/* Bouton "Voir la chambre" dans l'overlay */
+.btn-voir-chambre {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  background: var(--blanc);
+  color: var(--vert);
+  border: none;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: all var(--transition);
+}
+
+.btn-voir-chambre:hover { background: var(--or); color: var(--noir); }
+
+/* Badge type de chambre sur l'image */
+.chambre-badge {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  padding: 0.25rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--vert);
+  color: var(--blanc);
+}
+
+/* Variantes de couleur des badges */
+.chambre-badge.superieure { background: var(--vert-clair); }
+.chambre-badge.suite       { background: var(--or); color: var(--noir); }
+.chambre-badge.presidentielle { background: var(--rouge); }
+
+/* Infos textuelles de la chambre */
+.chambre-info { padding: 1.5rem; }
+
+/* Étoiles de notation */
+.chambre-etoiles {
+  color: var(--or);
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Nom de la chambre */
+.chambre-nom {
+  font-family: var(--font-titre);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--texte);
+  margin-bottom: 0.4rem;
+}
+
+/* Description de la chambre */
+.chambre-desc {
+  font-size: 0.83rem;
+  color: var(--discret);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Liste des équipements de la chambre */
+.chambre-equip-liste {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.chambre-equip-liste li {
+  font-size: 0.78rem;
+  color: var(--gris-fonce);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.chambre-equip-liste i {
+  color: var(--vert-clair);
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+
+/* Métadonnées de la chambre (surface, capacité, lit) */
+.chambre-meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: var(--gris);
+  margin-bottom: 1.2rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--gris-clair);
+}
+
+.chambre-meta i { color: var(--vert); }
+
+/* Pied de la carte chambre */
+.chambre-pied {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cp-montant {
+  font-family: var(--font-titre);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--vert);
+}
+.cp-unite {
+  font-size: 0.72rem;
+  color: var(--discret);
+  display: block;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   11. SECTION SERVICES
+───────────────────────────────────────────────────────────────────── */
+
+.section-services { background: var(--blanc); }
+
+/* Grille des services */
+.grille-services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Carte de service */
+.carte-service {
+  padding: 2rem 1.5rem;
+  background: var(--creme);
+  border-radius: var(--rayon-lg);
+  text-align: center;
+  border: 2px solid transparent;
+  transition: all var(--transition);
+}
+
+.carte-service:hover {
+  border-color: var(--vert);
+  background: var(--vert-pale);
+  transform: translateY(-5px);
+}
+
+/* Icône du service */
+.service-ico {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: var(--vert);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem;
+  font-size: 1.3rem;
+  color: var(--blanc);
+  transition: background var(--transition), transform var(--transition);
+}
+
+.carte-service:hover .service-ico {
+  background: var(--vert-clair);
+  transform: rotate(10deg) scale(1.1);
+}
+
+.carte-service h4 {
+  font-family: var(--font-titre);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--texte);
+}
+
+.carte-service p {
+  font-size: 0.82rem;
+  color: var(--discret);
+  line-height: 1.6;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   12. SECTION GALERIE
+───────────────────────────────────────────────────────────────────── */
+
+.section-galerie { background: var(--gris-clair); }
+
+/* Grille masonry de la galerie */
+.grille-galerie {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 240px);
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Élément de galerie */
+.gal-item {
+  border-radius: var(--rayon);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Grande cellule : 2 colonnes × 2 lignes */
+.gal-item.grand {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.gal-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gal-item:hover img { transform: scale(1.08); }
+
+/* Overlay avec nom au survol */
+.gal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(45,106,79,0.6);
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.gal-item:hover .gal-overlay { opacity: 1; }
+
+.gal-overlay span {
+  color: var(--blanc);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   13. SECTION RÉSERVATION
+───────────────────────────────────────────────────────────────────── */
+
+.section-reservation {
+  background: var(--blanc);
+}
+
+/* Disposition en 2 colonnes : info + formulaire */
+.reservation-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 4rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* Colonne info à gauche */
+.reserv-info { padding-top: 1rem; }
+
+/* Liste des avantages */
+.reserv-avantages {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.reserv-avantages li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+  color: var(--gris-fonce);
+}
+
+.reserv-avantages i { color: var(--vert-clair); font-size: 1rem; }
+
+/* Liens de contact */
+.reserv-contact {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.contact-lien {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+  color: var(--vert);
+  font-weight: 600;
+  transition: color var(--transition);
+}
+
+.contact-lien:hover { color: var(--vert-clair); }
+.contact-lien i { font-size: 1rem; }
+
+/* Formulaire de réservation */
+.form-reserv {
+  background: var(--creme);
+  border-radius: var(--rayon-lg);
+  padding: 2.5rem;
+  box-shadow: var(--ombre);
+}
+
+/* Titre du formulaire */
+.form-titre {
+  font-family: var(--font-titre);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--texte);
+  margin-bottom: 1.8rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--gris-clair);
+}
+
+/* Grille du formulaire : 2 colonnes */
+.form-grille {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+/* Élément pleine largeur dans le formulaire */
+.col-plein { grid-column: 1 / -1; }
+
+/* Groupe label + input */
+.form-groupe {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* Label du formulaire */
+.form-groupe label {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vert);
+  font-weight: 600;
+}
+
+/* Champs de saisie */
+.form-groupe input,
+.form-groupe select,
+.form-groupe textarea {
+  padding: 0.8rem 1rem;
+  background: var(--blanc);
+  border: 2px solid var(--gris-clair);
+  border-radius: var(--rayon);
+  color: var(--texte);
+  font-family: var(--font-corps);
+  font-size: 0.9rem;
+  transition: border-color var(--transition);
+  appearance: none;
+  resize: vertical;
+}
+
+.form-groupe input::placeholder,
+.form-groupe textarea::placeholder { color: var(--gris); }
+
+/* Focus : bordure verte */
+.form-groupe input:focus,
+.form-groupe select:focus,
+.form-groupe textarea:focus {
+  outline: none;
+  border-color: var(--vert);
+}
+
+.form-groupe select option { background: var(--blanc); }
+
+/* Bouton de soumission */
+.btn-submit {
+  width: 100%;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 0.92rem;
+  border-radius: var(--rayon);
+  margin-top: 0.5rem;
+}
+
+/* Note de politique */
+.form-note {
+  font-size: 0.72rem;
+  color: var(--gris);
+  text-align: center;
+  margin-top: 0.8rem;
+}
+
+.form-note a { color: var(--vert); text-decoration: underline; }
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   14. SECTION CONTACT
+───────────────────────────────────────────────────────────────────── */
+
+.section-contact { background: var(--gris-clair); }
+
+/* Grille de 3 cartes contact */
+.grille-contact {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Carte de contact */
+.carte-contact {
+  background: var(--blanc);
+  border-radius: var(--rayon-lg);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--ombre);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.carte-contact:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--ombre-forte);
+}
+
+/* Icône de contact */
+.contact-ico {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--vert);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 1.3rem;
+  color: var(--blanc);
+}
+
+.carte-contact h4 {
+  font-family: var(--font-titre);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--texte);
+}
+
+.carte-contact p {
+  font-size: 0.83rem;
+  color: var(--discret);
+  line-height: 1.6;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   15. PIED DE PAGE (FOOTER)
+───────────────────────────────────────────────────────────────────── */
+
+#footer {
+  background: var(--noir);
+  color: rgba(255,255,255,0.75);
+}
+
+/* Partie haute du footer */
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 5vw 3rem;
+}
+
+/* Logo dans le footer */
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-titre);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--or);
+  margin-bottom: 1rem;
+}
+
+.footer-logo i { color: var(--vert-clair); }
+.footer-logo span { color: var(--blanc); }
+
+/* Description dans le footer */
+.footer-desc {
+  font-size: 0.83rem;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 1.5rem;
+}
+
+/* Réseaux sociaux dans le footer */
+.footer-socials {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.footer-socials a {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  transition: all var(--transition);
+}
+
+.footer-socials a:hover {
+  border-color: var(--or);
+  color: var(--or);
+  transform: translateY(-2px);
+}
+
+/* Titre des colonnes du footer */
+.footer-col-titre {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--or);
+  margin-bottom: 1.2rem;
+}
+
+/* Liens dans les colonnes */
+.footer-liens {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-liens li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.55);
+}
+
+.footer-liens a {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.55);
+  transition: color var(--transition);
+}
+
+.footer-liens a:hover { color: var(--or); }
+.footer-liens i { color: var(--vert-clair); }
+
+/* Séparateur horizontal du footer */
+.footer-sep {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Bas du footer : copyright + liens légaux */
+.footer-bas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 5vw;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.35);
+}
+
+.footer-bas-liens {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-bas-liens a {
+  color: rgba(255,255,255,0.35);
+  transition: color var(--transition);
+}
+
+.footer-bas-liens a:hover { color: var(--or); }
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   16. MODAL HÔTEL (DÉTAIL)
+───────────────────────────────────────────────────────────────────── */
+
+/* Fond semi-transparent de tous les modals */
+.modal-fond {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);  /* Flou de l'arrière-plan                     */
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  visibility: hidden;          /* Caché par défaut                           */
+  transition: opacity var(--transition), visibility var(--transition);
+}
+
+/* Affichage du modal (classe ajoutée par JS) */
+.modal-fond.actif {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Boîte du modal hôtel */
+.modal-hotel-boite {
+  background: var(--blanc);
+  border-radius: var(--rayon-lg);
+  max-width: 700px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;            /* Défilement si contenu trop long            */
+  position: relative;
+  transform: scale(0.9) translateY(20px);
+  transition: transform var(--transition);
+}
+
+/* Animation d'entrée du modal */
+.modal-fond.actif .modal-hotel-boite {
+  transform: scale(1) translateY(0);
+}
+
+/* Bouton de fermeture du modal */
+.modal-fermer {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  z-index: 10;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: var(--blanc);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+}
+
+.modal-fermer:hover { background: var(--rouge); }
+
+/* Image de l'hôtel dans le modal */
+.modal-hotel-img {
+  height: 280px;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--rayon-lg) var(--rayon-lg) 0 0; /* Coins ronds en haut */
+}
+
+/* Corps du modal hôtel */
+.modal-hotel-corps {
+  padding: 2rem;
+}
+
+/* Province dans le modal */
+.modal-province {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--vert);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Titre de l'hôtel dans le modal */
+.modal-hotel-titre {
+  font-family: var(--font-titre);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--texte);
+  margin-bottom: 1rem;
+}
+
+/* Description longue dans le modal */
+.modal-hotel-desc {
+  font-size: 0.9rem;
+  color: var(--discret);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+/* Équipements dans le modal */
+.modal-equip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.8rem;
+}
+
+.modal-equip span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.9rem;
+  background: var(--vert-pale);
+  color: var(--vert);
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   17. MODAL DE CONFIRMATION
+───────────────────────────────────────────────────────────────────── */
+
+/* Boîte du modal de confirmation */
+.modal-confirm-boite {
+  background: var(--blanc);
+  border-radius: var(--rayon-lg);
+  max-width: 460px;
+  width: 100%;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  transform: scale(0.9);
+  transition: transform var(--transition);
+}
+
+.modal-fond.actif .modal-confirm-boite { transform: scale(1); }
+
+/* Icône de succès */
+.confirm-icone {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--vert-pale);
+  border: 3px solid var(--vert);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 1.8rem;
+  color: var(--vert);
+}
+
+/* Titre de confirmation */
+.confirm-titre {
+  font-family: var(--font-titre);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--texte);
+  margin-bottom: 0.8rem;
+}
+
+/* Texte de confirmation */
+.confirm-texte {
+  font-size: 0.88rem;
+  color: var(--discret);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* Numéro de réservation */
+.confirm-ref {
+  display: inline-block;
+  background: var(--vert-pale);
+  border: 2px solid var(--vert);
+  color: var(--vert);
+  border-radius: var(--rayon);
+  padding: 0.4rem 1.5rem;
+  font-family: var(--font-titre);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  letter-spacing: 0.1em;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   18. BOUTON RETOUR EN HAUT
+───────────────────────────────────────────────────────────────────── */
+
+#btn-top {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: var(--vert);
+  border: none;
+  color: var(--blanc);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition);
+  z-index: 500;
+  box-shadow: 0 4px 16px rgba(45,106,79,0.4);
+}
+
+/* Affichage après défilement (classe ajoutée par JS) */
+#btn-top.visible { opacity: 1; visibility: visible; }
+
+#btn-top:hover {
+  background: var(--vert-clair);
+  transform: translateY(-3px);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   19. ANIMATIONS AU SCROLL (INTERSECTION OBSERVER)
+───────────────────────────────────────────────────────────────────── */
+
+/* État initial : élément invisible, décalé vers le bas */
+.reveler {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+/* Classe ajoutée par JS quand l'élément entre dans le viewport */
+.reveler.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   20. KEYFRAMES D'ANIMATIONS GÉNÉRALES
+───────────────────────────────────────────────────────────────────── */
+
+/* Apparition du haut vers le bas */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Apparition du bas vers le haut */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Apparition de la gauche vers la droite */
+@keyframes fadeLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   21. TOAST / NOTIFICATION
+───────────────────────────────────────────────────────────────────── */
+
+/* Toast (créé dynamiquement par JS) */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.9rem 2rem;
+  border-radius: var(--rayon);
+  font-size: 0.88rem;
+  z-index: 3000;
+  box-shadow: var(--ombre-forte);
+  max-width: 90vw;
+  text-align: center;
+  pointer-events: none;       /* N'intercepte pas les clics                  */
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   22. MEDIA QUERIES (RESPONSIVE)
+   Adaptations pour tablettes et mobiles
+───────────────────────────────────────────────────────────────────── */
+
+/* ─── TABLETTE (≤ 1024px) ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+
+  /* Grille hôtels : 2 colonnes */
+  .grille-hotels {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Footer : 2 colonnes */
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  /* Réservation : 1 colonne */
+  .reservation-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  /* Widget de recherche : 2 colonnes */
+  .widget-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ─── MOBILE (≤ 768px) ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Navigation : affiche le burger, cache les liens */
+  .burger { display: flex; }
+
+  /* Menu mobile plein écran */
+  .nav-liens {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 100vh;
+    background: rgba(26,23,20,0.97);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    display: none; /* Caché par défaut, JS l'affiche                        */
+  }
+
+  /* Menu mobile ouvert */
+  .nav-liens.ouvert { display: flex; }
+
+  /* Liens dans le menu mobile : plus grands */
+  .nav-lien {
+    font-size: 1.1rem;
+    color: var(--blanc) !important;
+  }
+
+  /* Statistiques du hero en 2 colonnes sur mobile */
+  .hero-stats { gap: 1rem; }
+  .stat-sep { display: none; }
+
+  /* Hôtels : 1 colonne sur mobile */
+  .grille-hotels { grid-template-columns: 1fr; }
+
+  /* Galerie : 2 colonnes sur mobile */
+  .grille-galerie {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 180px);
+  }
+
+  .gal-item.grand { grid-column: span 2; grid-row: span 1; }
+
+  /* Formulaire : 1 colonne sur mobile */
+  .form-grille { grid-template-columns: 1fr; }
+  .col-plein { grid-column: 1; }
+
+  /* Contact : 1 colonne sur mobile */
+  .grille-contact { grid-template-columns: 1fr; }
+
+  /* Widget : 1 colonne sur mobile */
+  .widget-form { grid-template-columns: 1fr; }
+
+  /* Footer : 1 colonne sur mobile */
+  .footer-top { grid-template-columns: 1fr; padding: 2.5rem 5vw; }
+
+  /* Bas du footer en colonne */
+  .footer-bas { flex-direction: column; gap: 0.8rem; text-align: center; }
+}
+
+/* ─── TRÈS PETIT (≤ 480px) ─────────────────────────────────────────── */
+@media (max-width: 480px) {
+
+  /* Sections moins padding */
+  section { padding: 3.5rem 1.2rem; }
+
+  /* Galerie : 1 colonne */
+  .grille-galerie { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .gal-item { height: 200px; }
+  .gal-item.grand { grid-column: 1; }
+}

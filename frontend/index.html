@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GasikaraHotel – Hôtels de Luxe à Madagascar</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       CHARGEMENT INITIAL (PRELOADER)
+       Affiché pendant le chargement de la page
+  ════════════════════════════════════════════════════════════════════ -->
+  <div id="preloader">
+    <!-- Logo centré pendant le chargement -->
+    <div class="preloader-logo">
+      <span class="pre-gasikara">GASIKARA</span>
+      <span class="pre-hotel">HOTEL</span>
+    </div>
+    <!-- Barre de progression animée -->
+    <div class="preloader-barre">
+      <div class="preloader-barre-inner"></div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       BARRE DE NAVIGATION PRINCIPALE
+       Navigation fixe avec logo, liens et bouton réservation
+  ════════════════════════════════════════════════════════════════════ -->
+  <nav id="navbar">
+    <!-- Logo cliquable qui ramène à l'accueil -->
+    <a href="#accueil" class="nav-logo">
+      <!-- Icône palmier pour l'identité malgache -->
+      <i class="fa-solid fa-leaf nav-logo-icone"></i>
+      <span class="logo-gasikara">GASIKARA</span>
+      <span class="logo-hotel">HOTEL</span>
+    </a>
+
+    <!-- Bouton hamburger pour le menu mobile -->
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <!-- Trois barres du burger -->
+      <span class="burger-barre"></span>
+      <span class="burger-barre"></span>
+      <span class="burger-barre"></span>
+    </button>
+
+    <!-- Liens de navigation principale -->
+    <ul class="nav-liens" id="nav-liens">
+      <li><a href="#accueil" class="nav-lien actif">Accueil</a></li>
+      <li><a href="#hotels" class="nav-lien">Nos Hôtels</a></li>
+      <li><a href="#chambres" class="nav-lien">Chambres</a></li>
+      <li><a href="#services" class="nav-lien">Services</a></li>
+      <li><a href="#galerie" class="nav-lien">Galerie</a></li>
+      <li><a href="#contact" class="nav-lien">Contact</a></li>
+      <!-- Bouton de réservation mis en valeur -->
+      <li>
+        <a href="#reservation" class="btn-nav-reserv">
+          <i class="fa-regular fa-calendar-check"></i>
+          Réserver
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       SECTION HERO (PAGE D'ACCUEIL)
+       Image de fond plein écran avec texte et widget de recherche
+  ════════════════════════════════════════════════════════════════════ -->
+  <section id="accueil" class="hero">
+
+    <!-- Fond : image de Madagascar avec dégradé pour lisibilité du texte -->
+    <div class="hero-fond">
+      <!-- Couche de particules décoratives (créées par JS) -->
+      <div class="hero-particules" id="particules"></div>
+    </div>
+
+    <!-- Contenu central du hero -->
+    <div class="hero-contenu">
+      <!-- Étiquette animée au-dessus du titre -->
+      <div class="hero-badge">
+        <i class="fa-solid fa-star"></i>
+        Chaîne hôtelière · 6 Provinces · Madagascar
+      </div>
+
+      <!-- Titre principal en deux lignes -->
+      <h1 class="hero-titre">
+        <span class="titre-ligne-1">Découvrez</span>
+        <span class="titre-ligne-2"><em>GasikaraHotel</em></span>
+        <span class="titre-ligne-3">à Madagascar</span>
+      </h1>
+
+      <!-- Sous-titre descriptif -->
+      <p class="hero-sous-titre">
+        Six hôtels d'exception, un dans chaque province de la Grande Île.
+        Vivez l'hospitalité malgache dans tout son splendeur.
+      </p>
+
+      <!-- Boutons d'action principaux -->
+      <div class="hero-actions">
+        <a href="#hotels" class="btn btn-primaire">
+          <i class="fa-solid fa-map-location-dot"></i>
+          Nos 6 Hôtels
+        </a>
+        <a href="#reservation" class="btn btn-outline">
+          <i class="fa-regular fa-calendar-check"></i>
+          Réserver maintenant
+        </a>
+      </div>
+
+      <!-- Indicateurs statistiques -->
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num">6</span>
+          <span class="stat-label">Provinces</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+          <span class="stat-num">200+</span>
+          <span class="stat-label">Chambres</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+          <span class="stat-num">5★</span>
+          <span class="stat-label">Étoiles</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+          <span class="stat-num">15K+</span>
+          <span class="stat-label">Clients satisfaits</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flèche de défilement animée -->
+    <a href="#hotels" class="hero-scroll-indic">
+      <i class="fa-solid fa-chevron-down"></i>
+    </a>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       WIDGET DE RECHERCHE DE DISPONIBILITÉS
+       Formulaire rapide pour chercher une chambre
+  ════════════════════════════════════════════════════════════════════ -->
+  <div class="widget-section">
+    <div class="widget-conteneur">
+      <!-- Titre du widget -->
+      <div class="widget-titre">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        Rechercher une disponibilité
+      </div>
+
+      <!-- Formulaire de recherche (4 champs + bouton) -->
+      <div class="widget-form" id="widget-form">
+
+        <!-- Champ : Sélection de l'hôtel / province -->
+        <div class="widget-champ">
+          <label class="widget-label">
+            <i class="fa-solid fa-location-dot"></i> Hôtel / Province
+          </label>
+          <select id="w-hotel" class="widget-input">
+            <option value="">Tous les hôtels</option>
+            <option value="antananarivo">Antananarivo</option>
+            <option value="toamasina">Toamasina</option>
+            <option value="mahajanga">Mahajanga</option>
+            <option value="fianarantsoa">Fianarantsoa</option>
+            <option value="toliara">Toliara</option>
+            <option value="antsiranana">Antsiranana</option>
+          </select>
+        </div>
+
+        <!-- Champ : Date d'arrivée -->
+        <div class="widget-champ">
+          <label class="widget-label">
+            <i class="fa-regular fa-calendar"></i> Arrivée
+          </label>
+          <input type="date" id="w-arrivee" class="widget-input" />
+        </div>
+
+        <!-- Champ : Date de départ -->
+        <div class="widget-champ">
+          <label class="widget-label">
+            <i class="fa-regular fa-calendar"></i> Départ
+          </label>
+          <input type="date" id="w-depart" class="widget-input" />
+        </div>
+
+        <!-- Champ : Nombre de voyageurs -->
+        <div class="widget-champ">
+          <label class="widget-label">
+            <i class="fa-regular fa-user"></i> Voyageurs
+          </label>
+          <select id="w-voyageurs" class="widget-input">
+            <option value="1">1 adulte</option>
+            <option value="2" selected>2 adultes</option>
+            <option value="3">3 adultes</option>
+            <option value="4">4 adultes</option>
+          </select>
+        </div>
+
+        <!-- Bouton de recherche -->
+        <button class="widget-btn" onclick="rechercherDisponibilites()">
+          <i class="fa-solid fa-search"></i>
+          Rechercher
+        </button>
+
+      </div><!-- fin widget-form -->
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       SECTION NOS HÔTELS PAR PROVINCE
+       6 cartes hôtel avec image de fond, une par province malgache
+  ════════════════════════════════════════════════════════════════════ -->
+  <section id="hotels" class="section-hotels">
+
+    <!-- En-tête de section -->
+    <div class="en-tete-section reveler">
+      <span class="label-section">Nos destinations</span>
+      <h2 class="titre-section">Nos Hôtels dans les <em>6 Provinces</em></h2>
+      <p class="desc-section">
+        De la capitale à la côte, chaque province de Madagascar abrite
+        un GasikaraHotel unique, imprégné de la culture locale.
+      </p>
+    </div>
+
+    <!-- Grille des 6 hôtels (une par province) -->
+    <div class="grille-hotels">
+
+      <!-- ── HÔTEL 1 : ANTANANARIVO ─────────────────────────────────── -->
+      <!-- data-province : utilisé par JS pour ouvrir le bon modal -->
+      <article class="carte-hotel reveler" data-province="antananarivo" onclick="ouvrirHotel('antananarivo')">
+        <!-- Image de fond : paysage d'Antananarivo -->
+        <div
+          class="hotel-image"
+          style="background-image: url('../img/tana.jpg')"
+        >
+          <!-- Badge province -->
+          <div class="hotel-badge">
+            <i class="fa-solid fa-star"></i> 5 Étoiles
+          </div>
+          <!-- Numéro de la province -->
+          <div class="hotel-num">01</div>
+        </div>
+
+        <!-- Contenu textuel de la carte -->
+        <div class="hotel-corps">
+          <!-- Province -->
+          <div class="hotel-province">
+            <i class="fa-solid fa-location-dot"></i> Province d'Antananarivo
+          </div>
+          <!-- Nom de l'hôtel -->
+          <h3 class="hotel-nom">GasikaraHotel Tana</h3>
+          <!-- Description courte -->
+          <p class="hotel-desc">
+            Au cœur des Hautes Terres centrales, offrant une vue panoramique
+            sur la ville des mille collines et le palais de la Reine.
+          </p>
+          <!-- Équipements rapides -->
+          <div class="hotel-equip">
+            <span><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+            <span><i class="fa-solid fa-water-ladder"></i> Piscine</span>
+            <span><i class="fa-solid fa-spa"></i> Spa</span>
+            <span><i class="fa-solid fa-utensils"></i> Restaurant</span>
+          </div>
+          <!-- Pied : prix + bouton -->
+          <div class="hotel-pied">
+            <div class="hotel-prix">
+              <span class="prix-depuis">depuis</span>
+              <span class="prix-montant">250 000</span>
+              <span class="prix-unite">Ar/nuit</span>
+            </div>
+            <button class="btn-decouvrir">
+              Découvrir <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── HÔTEL 2 : TOAMASINA ───────────────────────────────────── -->
+      <article class="carte-hotel reveler" data-province="toamasina" onclick="ouvrirHotel('toamasina')">
+        <div
+          class="hotel-image"
+          style="background-image: url('../img/toamasina.jpg')"
+        >
+          <div class="hotel-badge"><i class="fa-solid fa-star"></i> 5 Étoiles</div>
+          <div class="hotel-num">02</div>
+        </div>
+        <div class="hotel-corps">
+          <div class="hotel-province">
+            <i class="fa-solid fa-location-dot"></i> Province de Toamasina
+          </div>
+          <h3 class="hotel-nom">GasikaraHotel Tamatave</h3>
+          <p class="hotel-desc">
+            Face à l'Océan Indien, entouré de palmiers et de plages de sable
+            blanc. La porte d'entrée vers la côte est malgache.
+          </p>
+          <div class="hotel-equip">
+            <span><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+            <span><i class="fa-solid fa-umbrella-beach"></i> Plage</span>
+            <span><i class="fa-solid fa-water-ladder"></i> Piscine</span>
+            <span><i class="fa-solid fa-utensils"></i> Restaurant</span>
+          </div>
+          <div class="hotel-pied">
+            <div class="hotel-prix">
+              <span class="prix-depuis">depuis</span>
+              <span class="prix-montant">280 000</span>
+              <span class="prix-unite">Ar/nuit</span>
+            </div>
+            <button class="btn-decouvrir">
+              Découvrir <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── HÔTEL 3 : MAHAJANGA ───────────────────────────────────── -->
+      <article class="carte-hotel reveler" data-province="mahajanga" onclick="ouvrirHotel('mahajanga')">
+        <div
+          class="hotel-image"
+          style="background-image: url('../img/mojanga.jpg')"
+        >
+          <div class="hotel-badge"><i class="fa-solid fa-star"></i> 5 Étoiles</div>
+          <div class="hotel-num">03</div>
+        </div>
+        <div class="hotel-corps">
+          <div class="hotel-province">
+            <i class="fa-solid fa-location-dot"></i> Province de Mahajanga
+          </div>
+          <h3 class="hotel-nom">GasikaraHotel Majunga</h3>
+          <p class="hotel-desc">
+            Sur la côte ouest baignée par le Canal de Mozambique, ville
+            cosmopolite connue pour ses couchers de soleil flamboyants.
+          </p>
+          <div class="hotel-equip">
+            <span><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+            <span><i class="fa-solid fa-sailboat"></i> Excursions</span>
+            <span><i class="fa-solid fa-water-ladder"></i> Piscine</span>
+            <span><i class="fa-solid fa-spa"></i> Spa</span>
+          </div>
+          <div class="hotel-pied">
+            <div class="hotel-prix">
+              <span class="prix-depuis">depuis</span>
+              <span class="prix-montant">240 000</span>
+              <span class="prix-unite">Ar/nuit</span>
+            </div>
+            <button class="btn-decouvrir">
+              Découvrir <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── HÔTEL 4 : FIANARANTSOA ─────────────────────────────────── -->
+      <article class="carte-hotel reveler" data-province="fianarantsoa" onclick="ouvrirHotel('fianarantsoa')">
+        <div
+          class="hotel-image"
+          style="background-image: url('../img/fianara.jpg')"
+        >
+          <div class="hotel-badge"><i class="fa-solid fa-star"></i> 5 Étoiles</div>
+          <div class="hotel-num">04</div>
+        </div>
+        <div class="hotel-corps">
+          <div class="hotel-province">
+            <i class="fa-solid fa-location-dot"></i> Province de Fianarantsoa
+          </div>
+          <h3 class="hotel-nom">GasikaraHotel Fianara</h3>
+          <p class="hotel-desc">
+            Niché dans les vignobles du sud des Hautes Terres, au cœur
+            d'une région réputée pour son vin, ses forêts et sa sérénité.
+          </p>
+          <div class="hotel-equip">
+            <span><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+            <span><i class="fa-solid fa-wine-glass"></i> Cave à vin</span>
+            <span><i class="fa-solid fa-tree"></i> Nature</span>
+            <span><i class="fa-solid fa-utensils"></i> Restaurant</span>
+          </div>
+          <div class="hotel-pied">
+            <div class="hotel-prix">
+              <span class="prix-depuis">depuis</span>
+              <span class="prix-montant">220 000</span>
+              <span class="prix-unite">Ar/nuit</span>
+            </div>
+            <button class="btn-decouvrir">
+              Découvrir <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── HÔTEL 5 : TOLIARA ──────────────────────────────────────── -->
+      <article class="carte-hotel reveler" data-province="toliara" onclick="ouvrirHotel('toliara')">
+        <div
+          class="hotel-image"
+          style="background-image: url('../img/tulear.jpg')"
+        >
+          <div class="hotel-badge"><i class="fa-solid fa-star"></i> 5 Étoiles</div>
+          <div class="hotel-num">05</div>
+        </div>
+        <div class="hotel-corps">
+          <div class="hotel-province">
+            <i class="fa-solid fa-location-dot"></i> Province de Toliara
+          </div>
+          <h3 class="hotel-nom">GasikaraHotel Tuléar</h3>
+          <p class="hotel-desc">
+            Au bord du lagon et du récif corallien de Toliara, paradis
+            des amateurs de plongée et de plages sauvages du Grand Sud.
+          </p>
+          <div class="hotel-equip">
+            <span><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+            <span><i class="fa-solid fa-fish"></i> Plongée</span>
+            <span><i class="fa-solid fa-umbrella-beach"></i> Plage</span>
+            <span><i class="fa-solid fa-water-ladder"></i> Piscine</span>
+          </div>
+          <div class="hotel-pied">
+            <div class="hotel-prix">
+              <span class="prix-depuis">depuis</span>
+              <span class="prix-montant">260 000</span>
+              <span class="prix-unite">Ar/nuit</span>
+            </div>
+            <button class="btn-decouvrir">
+              Découvrir <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── HÔTEL 6 : ANTSIRANANA ──────────────────────────────────── -->
+      <article class="carte-hotel reveler" data-province="antsiranana" onclick="ouvrirHotel('antsiranana')">
+        <div
+          class="hotel-image"
+          style="background-image: url('../img/diego.jpg')"
+        >
+          <div class="hotel-badge"><i class="fa-solid fa-star"></i> 5 Étoiles</div>
+          <div class="hotel-num">06</div>
+        </div>
+        <div class="hotel-corps">
+          <div class="hotel-province">
+            <i class="fa-solid fa-location-dot"></i> Province d'Antsiranana
+          </div>
+          <h3 class="hotel-nom">GasikaraHotel Diego</h3>
+          <p class="hotel-desc">
+            À la Baie des Sakalava et Diego-Suarez, l'une des plus belles
+            baies du monde. Kitesurf, mangroves et faune extraordinaire.
+          </p>
+          <div class="hotel-equip">
+            <span><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+            <span><i class="fa-solid fa-wind"></i> Kitesurf</span>
+            <span><i class="fa-solid fa-water-ladder"></i> Piscine</span>
+            <span><i class="fa-solid fa-spa"></i> Spa</span>
+          </div>
+          <div class="hotel-pied">
+            <div class="hotel-prix">
+              <span class="prix-depuis">depuis</span>
+              <span class="prix-montant">290 000</span>
+              <span class="prix-unite">Ar/nuit</span>
+            </div>
+            <button class="btn-decouvrir">
+              Découvrir <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- fin grille-hotels -->
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       SECTION CHAMBRES (STYLE SLIDER/CARDS)
+       Affichage des types de chambres avec navigation
+  ════════════════════════════════════════════════════════════════════ -->
+  <section id="chambres" class="section-chambres">
+
+    <!-- Fond décoratif de la section -->
+    <div class="chambres-fond"></div>
+
+    <div class="chambres-wrapper">
+      <!-- En-tête -->
+      <div class="en-tete-section reveler">
+        <span class="label-section">Hébergement</span>
+        <h2 class="titre-section">Nos Types de <em>Chambres</em></h2>
+        <p class="desc-section">
+          Du confort à l'excellence, chaque chambre GasikaraHotel
+          est un sanctuaire pensé pour votre bien-être.
+        </p>
+      </div>
+
+      <!-- Filtres de chambres (par type) -->
+      <div class="chambres-filtres reveler">
+        <button class="filtre-btn actif" data-filtre="tous" onclick="filtrerChambres('tous', this)">
+          Toutes
+        </button>
+        <button class="filtre-btn" data-filtre="standard" onclick="filtrerChambres('standard', this)">
+          Standard
+        </button>
+        <button class="filtre-btn" data-filtre="superieure" onclick="filtrerChambres('superieure', this)">
+          Supérieure
+        </button>
+        <button class="filtre-btn" data-filtre="suite" onclick="filtrerChambres('suite', this)">
+          Suite
+        </button>
+        <button class="filtre-btn" data-filtre="presidentielle" onclick="filtrerChambres('presidentielle', this)">
+          Présidentielle
+        </button>
+      </div>
+
+      <!-- Grille de chambres (populée partiellement par HTML, filtrée par JS) -->
+      <div class="grille-chambres" id="grille-chambres">
+
+        <!-- ── CHAMBRE 1 : Standard ─────────────────────────────────── -->
+        <!-- data-type : utilisé par le filtre JS -->
+        <article class="carte-chambre reveler" data-type="standard">
+          <!-- Image de la chambre avec overlay -->
+          <div class="chambre-img-wrap">
+            <img
+              src="../img/standard.jpg"
+              alt="Chambre Standard"
+              class="chambre-img"
+              loading="lazy"
+            />
+            <!-- Overlay au survol -->
+            <div class="chambre-overlay">
+              <button class="btn-voir-chambre" onclick="ouvrirChambre(event, 'standard')">
+                <i class="fa-regular fa-eye"></i> Voir la chambre
+              </button>
+            </div>
+            <!-- Badge type de chambre -->
+            <div class="chambre-badge">Standard</div>
+          </div>
+
+          <!-- Informations de la chambre -->
+          <div class="chambre-info">
+            <!-- Étoiles de notation -->
+            <div class="chambre-etoiles">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <!-- Nom de la chambre -->
+            <h3 class="chambre-nom">Chambre Classique</h3>
+            <!-- Description -->
+            <p class="chambre-desc">
+              Confort moderne avec vue sur les jardins.
+              Literie haut de gamme, salle de bain privée.
+            </p>
+            <!-- Équipements inclus -->
+            <ul class="chambre-equip-liste">
+              <li><i class="fa-solid fa-check"></i> Wi-Fi haut débit</li>
+              <li><i class="fa-solid fa-check"></i> Climatisation</li>
+              <li><i class="fa-solid fa-check"></i> Smart TV 55"</li>
+              <li><i class="fa-solid fa-check"></i> Minibar</li>
+              <li><i class="fa-solid fa-check"></i> Coffre-fort</li>
+              <li><i class="fa-solid fa-check"></i> Room service 24h</li>
+            </ul>
+            <!-- Superficie et capacité -->
+            <div class="chambre-meta">
+              <span><i class="fa-solid fa-maximize"></i> 28 m²</span>
+              <span><i class="fa-solid fa-user-group"></i> 1–2 personnes</span>
+              <span><i class="fa-solid fa-bed"></i> Grand lit</span>
+            </div>
+            <!-- Prix et bouton réserver -->
+            <div class="chambre-pied">
+              <div class="chambre-prix">
+                <span class="cp-montant">180 000</span>
+                <span class="cp-unite">Ar / nuit</span>
+              </div>
+              <button class="btn btn-primaire btn-sm" onclick="aller('reservation')">
+                Réserver
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── CHAMBRE 2 : Supérieure ───────────────────────────────── -->
+        <article class="carte-chambre reveler" data-type="superieure">
+          <div class="chambre-img-wrap">
+            <img
+              src="../img/sup.jpg"
+              alt="Chambre Supérieure"
+              class="chambre-img"
+              loading="lazy"
+            />
+            <div class="chambre-overlay">
+              <button class="btn-voir-chambre" onclick="ouvrirChambre(event, 'superieure')">
+                <i class="fa-regular fa-eye"></i> Voir la chambre
+              </button>
+            </div>
+            <div class="chambre-badge superieure">Supérieure</div>
+          </div>
+          <div class="chambre-info">
+            <div class="chambre-etoiles">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <h3 class="chambre-nom">Chambre Baobab</h3>
+            <p class="chambre-desc">
+              Terrasse privée avec vue sur la piscine ou le paysage.
+              Décoration inspirée du baobab emblématique de Madagascar.
+            </p>
+            <ul class="chambre-equip-liste">
+              <li><i class="fa-solid fa-check"></i> Wi-Fi haut débit</li>
+              <li><i class="fa-solid fa-check"></i> Terrasse privée</li>
+              <li><i class="fa-solid fa-check"></i> Baignoire & douche</li>
+              <li><i class="fa-solid fa-check"></i> Produits de luxe</li>
+              <li><i class="fa-solid fa-check"></i> Peignoir & chaussons</li>
+              <li><i class="fa-solid fa-check"></i> Petit-déjeuner inclus</li>
+            </ul>
+            <div class="chambre-meta">
+              <span><i class="fa-solid fa-maximize"></i> 42 m²</span>
+              <span><i class="fa-solid fa-user-group"></i> 2 personnes</span>
+              <span><i class="fa-solid fa-bed"></i> King size</span>
+            </div>
+            <div class="chambre-pied">
+              <div class="chambre-prix">
+                <span class="cp-montant">320 000</span>
+                <span class="cp-unite">Ar / nuit</span>
+              </div>
+              <button class="btn btn-primaire btn-sm" onclick="aller('reservation')">
+                Réserver
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── CHAMBRE 3 : Suite ───────────────────────────────────── -->
+        <article class="carte-chambre reveler" data-type="suite">
+          <div class="chambre-img-wrap">
+            <img
+              src="../img/vanille.jpg"
+              alt="Suite"
+              class="chambre-img"
+              loading="lazy"
+            />
+            <div class="chambre-overlay">
+              <button class="btn-voir-chambre" onclick="ouvrirChambre(event, 'suite')">
+                <i class="fa-regular fa-eye"></i> Voir la chambre
+              </button>
+            </div>
+            <div class="chambre-badge suite">Suite</div>
+          </div>
+          <div class="chambre-info">
+            <div class="chambre-etoiles">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <h3 class="chambre-nom">Suite Vanille</h3>
+            <p class="chambre-desc">
+              Salon séparé, jacuzzi panoramique et butler personnel.
+              L'essence même du luxe à la malgache.
+            </p>
+            <ul class="chambre-equip-liste">
+              <li><i class="fa-solid fa-check"></i> Salon séparé</li>
+              <li><i class="fa-solid fa-check"></i> Jacuzzi privatif</li>
+              <li><i class="fa-solid fa-check"></i> Butler dédié</li>
+              <li><i class="fa-solid fa-check"></i> Minibar premium</li>
+              <li><i class="fa-solid fa-check"></i> Transfert aéroport</li>
+              <li><i class="fa-solid fa-check"></i> Accès spa illimité</li>
+            </ul>
+            <div class="chambre-meta">
+              <span><i class="fa-solid fa-maximize"></i> 75 m²</span>
+              <span><i class="fa-solid fa-user-group"></i> 2–3 personnes</span>
+              <span><i class="fa-solid fa-bed"></i> King size</span>
+            </div>
+            <div class="chambre-pied">
+              <div class="chambre-prix">
+                <span class="cp-montant">750 000</span>
+                <span class="cp-unite">Ar / nuit</span>
+              </div>
+              <button class="btn btn-primaire btn-sm" onclick="aller('reservation')">
+                Réserver
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── CHAMBRE 4 : Présidentielle ─────────────────────────── -->
+        <article class="carte-chambre reveler" data-type="presidentielle">
+          <div class="chambre-img-wrap">
+            <img
+              src="../img/pres.jpg"
+              alt="Suite Présidentielle"
+              class="chambre-img"
+              loading="lazy"
+            />
+            <div class="chambre-overlay">
+              <button class="btn-voir-chambre" onclick="ouvrirChambre(event, 'presidentielle')">
+                <i class="fa-regular fa-eye"></i> Voir la chambre
+              </button>
+            </div>
+            <div class="chambre-badge presidentielle">Présidentielle</div>
+          </div>
+          <div class="chambre-info">
+            <div class="chambre-etoiles">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <h3 class="chambre-nom">Suite Présidentielle</h3>
+            <p class="chambre-desc">
+              L'ultime expérience. Appartement de 150m², piscine privée,
+              chef privé et conciergerie exclusive 24h/24.
+            </p>
+            <ul class="chambre-equip-liste">
+              <li><i class="fa-solid fa-check"></i> Piscine privée</li>
+              <li><i class="fa-solid fa-check"></i> Chef cuisinier privé</li>
+              <li><i class="fa-solid fa-check"></i> 2 chambres + salon</li>
+              <li><i class="fa-solid fa-check"></i> Voiture avec chauffeur</li>
+              <li><i class="fa-solid fa-check"></i> Tous repas inclus</li>
+              <li><i class="fa-solid fa-check"></i> Expériences exclusives</li>
+            </ul>
+            <div class="chambre-meta">
+              <span><i class="fa-solid fa-maximize"></i> 150 m²</span>
+              <span><i class="fa-solid fa-user-group"></i> 2–4 personnes</span>
+              <span><i class="fa-solid fa-bed"></i> 2 King size</span>
+            </div>
+            <div class="chambre-pied">
+              <div class="chambre-prix">
+                <span class="cp-montant">1 500 000</span>
+                <span class="cp-unite">Ar / nuit</span>
+              </div>
+              <button class="btn btn-primaire btn-sm" onclick="aller('reservation')">
+                Réserver
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- fin grille-chambres -->
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       SECTION SERVICES & ÉQUIPEMENTS
+  ════════════════════════════════════════════════════════════════════ -->
+  <section id="services" class="section-services">
+    <div class="en-tete-section reveler">
+      <span class="label-section">À votre service</span>
+      <h2 class="titre-section">Équipements & <em>Prestations</em></h2>
+    </div>
+
+    <!-- Grille de 6 services -->
+    <div class="grille-services">
+      <div class="carte-service reveler">
+        <div class="service-ico"><i class="fa-solid fa-utensils"></i></div>
+        <h4>Restaurant Gastronomique</h4>
+        <p>Cuisine raffinée mélangeant saveurs malgaches et internationales.</p>
+      </div>
+      <div class="carte-service reveler">
+        <div class="service-ico"><i class="fa-solid fa-spa"></i></div>
+        <h4>Spa & Bien-être</h4>
+        <p>Massages, hammam et soins inspirés des traditions malgaches.</p>
+      </div>
+      <div class="carte-service reveler">
+        <div class="service-ico"><i class="fa-solid fa-water-ladder"></i></div>
+        <h4>Piscines Infinity</h4>
+        <p>Piscines à débordement avec vues spectaculaires sur la nature.</p>
+      </div>
+      <div class="carte-service reveler">
+        <div class="service-ico"><i class="fa-solid fa-person-hiking"></i></div>
+        <h4>Excursions & Nature</h4>
+        <p>Lémuriens, baobabs, plages : explorez Madagascar avec nos guides.</p>
+      </div>
+      <div class="carte-service reveler">
+        <div class="service-ico"><i class="fa-solid fa-champagne-glasses"></i></div>
+        <h4>Événements & Mariages</h4>
+        <p>Cadres féeriques pour vos moments les plus précieux.</p>
+      </div>
+      <div class="carte-service reveler">
+        <div class="service-ico"><i class="fa-solid fa-concierge-bell"></i></div>
+        <h4>Conciergerie 24h</h4>
+        <p>Une équipe dédiée pour chaque besoin, à toute heure du jour et de nuit.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       SECTION GALERIE
+  ════════════════════════════════════════════════════════════════════ -->
+  <section id="galerie" class="section-galerie">
+    <div class="en-tete-section reveler">
+      <span class="label-section">Atmosphère</span>
+      <h2 class="titre-section"><em>Galerie</em> GasikaraHotel</h2>
+    </div>
+
+    <!-- Grille masonry de la galerie -->
+    <div class="grille-galerie">
+      <div class="gal-item grand reveler">
+        <img src="../img/galerie1.jpg" alt="Lobby" loading="lazy" />
+        <div class="gal-overlay"><span>Lobby Antananarivo</span></div>
+      </div>
+      <div class="gal-item reveler">
+        <img src="../img/galerie2.jpg" alt="Restaurant" loading="lazy" />
+        <div class="gal-overlay"><span>Restaurant</span></div>
+      </div>
+      <div class="gal-item reveler">
+        <img src="../img/galerie3.jpg" alt="Spa" loading="lazy" />
+        <div class="gal-overlay"><span>Spa & Relaxation</span></div>
+      </div>
+      <div class="gal-item reveler">
+        <img src="../img/paysage.jpg" alt="Paysage" loading="lazy" />
+        <div class="gal-overlay"><span>Paysages Malgaches</span></div>
+      </div>
+      <div class="gal-item reveler">
+        <img src="../img/plage.jpg" alt="Plage" loading="lazy" />
+        <div class="gal-overlay"><span>Plage Antsiranana</span></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       FORMULAIRE DE RÉSERVATION
+  ════════════════════════════════════════════════════════════════════ -->
+  <section id="reservation" class="section-reservation">
+    <div class="reservation-wrapper">
+
+      <!-- Colonne gauche : informations -->
+      <div class="reserv-info reveler">
+        <span class="label-section">Réservation directe</span>
+        <h2 class="titre-section">Planifiez votre<br><em>séjour idéal</em></h2>
+        <p style="color:var(--discret);font-size:.9rem;margin-top:1rem;line-height:1.8">
+          Réservez directement et bénéficiez du meilleur tarif garanti.
+          Notre équipe confirme votre séjour sous 24 heures.
+        </p>
+        <!-- Avantages -->
+        <ul class="reserv-avantages">
+          <li><i class="fa-solid fa-check-circle"></i> Meilleur prix garanti</li>
+          <li><i class="fa-solid fa-check-circle"></i> Annulation gratuite sous 48h</li>
+          <li><i class="fa-solid fa-check-circle"></i> Check-in flexible</li>
+          <li><i class="fa-solid fa-check-circle"></i> Petit-déjeuner offert</li>
+        </ul>
+        <!-- Contact rapide -->
+        <div class="reserv-contact">
+          <a href="tel:+261200000000" class="contact-lien">
+            <i class="fa-solid fa-phone"></i> +261 37 45 471 61
+          </a>
+          <a href="mailto:reservation@gasikarahotel.mg" class="contact-lien">
+            <i class="fa-solid fa-envelope"></i> gasikarahotel@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <!-- Colonne droite : formulaire -->
+      <div class="reserv-form-wrap reveler">
+        <form id="form-reserv" class="form-reserv" onsubmit="soumettreReservation(event)">
+          <h3 class="form-titre">Formulaire de réservation</h3>
+
+          <!-- Grille du formulaire -->
+          <div class="form-grille">
+
+            <!-- Prénom et Nom -->
+            <div class="form-groupe">
+              <label for="r-prenom">Prénom *</label>
+              <input type="text" id="r-prenom" placeholder="Prénom" required />
+            </div>
+            <div class="form-groupe">
+              <label for="r-nom">Nom *</label>
+              <input type="text" id="r-nom" placeholder="Nom" required />
+            </div>
+
+            <!-- Email et Téléphone -->
+            <div class="form-groupe">
+              <label for="r-email">Email *</label>
+              <input type="email" id="r-email" placeholder="email@gmail.com" required />
+            </div>
+            <div class="form-groupe">
+              <label for="r-tel">Téléphone</label>
+              <input type="tel" id="r-tel" placeholder="+261 00 00 000 00" />
+            </div>
+
+            <!-- Hôtel choisi -->
+            <div class="form-groupe col-plein">
+              <label for="r-hotel">Hôtel / Province *</label>
+              <select id="r-hotel" required>
+                <option value="">-- Choisissez votre hôtel --</option>
+                <option value="tana">GasikaraHotel Tana (Antananarivo)</option>
+                <option value="tamatave">GasikaraHotel Tamatave (Toamasina)</option>
+                <option value="majunga">GasikaraHotel Majunga (Mahajanga)</option>
+                <option value="fianar">GasikaraHotel Fianar (Fianarantsoa)</option>
+                <option value="tulear">GasikaraHotel Tuléar (Toliara)</option>
+                <option value="diego">GasikaraHotel Diego (Antsiranana)</option>
+              </select>
+            </div>
+
+            <!-- Dates -->
+            <div class="form-groupe">
+              <label for="r-arrivee">Date d'arrivée *</label>
+              <input type="date" id="r-arrivee" required />
+            </div>
+            <div class="form-groupe">
+              <label for="r-depart">Date de départ *</label>
+              <input type="date" id="r-depart" required />
+            </div>
+
+            <!-- Adultes et Enfants -->
+            <div class="form-groupe">
+              <label for="r-adultes">Adultes *</label>
+              <select id="r-adultes">
+                <option value="1">1 adulte</option>
+                <option value="2" selected>2 adultes</option>
+                <option value="3">3 adultes</option>
+                <option value="4">4 adultes</option>
+              </select>
+            </div>
+            <div class="form-groupe">
+              <label for="r-enfants">Enfants</label>
+              <select id="r-enfants">
+                <option value="0" selected>Aucun</option>
+                <option value="1">1 enfant</option>
+                <option value="2">2 enfants</option>e
+                <option value="3">3 enfants</option>
+              </select>
+            </div>
+
+            <!-- Type de chambre -->
+            <div class="form-groupe col-plein">
+              <label for="r-chambre">Type de chambre *</label>
+              <select id="r-chambre" required>
+                <option value="">-- Sélectionnez --</option>
+                <option value="classique">Chambre Classique – 180 000 Ar/nuit</option>
+                <option value="baobab">Chambre Baobab – 320 000 Ar/nuit</option>
+                <option value="vanille">Suite Vanille – 750 000 Ar/nuit</option>
+                <option value="presidentielle">Suite Présidentielle – 1 500 000 Ar/nuit</option>
+              </select>
+            </div>
+
+            <!-- Demandes spéciales -->
+            <div class="form-groupe col-plein">
+              <label for="r-demandes">Demandes spéciales</label>
+              <textarea id="r-demandes" rows="3" placeholder="Lit bébé, étage élevé, occasion spéciale..."></textarea>
+            </div>
+
+            <!-- Bouton de soumission -->
+            <div class="col-plein">
+              <button type="submit" class="btn btn-primaire btn-submit">
+                <i class="fa-regular fa-calendar-check"></i>
+                Confirmer ma réservation
+              </button>
+              <p class="form-note">
+                * En réservant, vous acceptez nos <a href="#">conditions générales</a>.
+              </p>
+            </div>
+
+          </div><!-- fin form-grille -->
+        </form>
+      </div>
+
+    </div><!-- fin reservation-wrapper -->
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       SECTION CONTACT
+  ════════════════════════════════════════════════════════════════════ -->
+  <section id="contact" class="section-contact">
+    <div class="en-tete-section reveler">
+      <span class="label-section">Nous joindre</span>
+      <h2 class="titre-section">Contactez-<em>nous</em></h2>
+    </div>
+
+    <!-- 3 cartes de contact -->
+    <div class="grille-contact">
+      <div class="carte-contact reveler">
+        <div class="contact-ico"><i class="fa-solid fa-phone"></i></div>
+        <h4>Téléphone</h4>
+        <p>+261 37 45 471 61</p>
+        <p>Disponible 24h/24 · 7j/7</p>
+      </div>
+      <div class="carte-contact reveler">
+        <div class="contact-ico"><i class="fa-solid fa-envelope"></i></div>
+        <h4>Email</h4>
+        <p>gasikarahotel@gmail.com</p>
+        <p>Réponse sous 2 heures</p>
+      </div>
+      <div class="carte-contact reveler">
+        <div class="contact-ico"><i class="fa-brands fa-whatsapp"></i></div>
+        <h4>WhatsApp</h4>
+        <p>+261 37 45 471 61</p>
+        <p>Chat en temps réel</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       PIED DE PAGE
+  ════════════════════════════════════════════════════════════════════ -->
+  <footer id="footer">
+    <div class="footer-top">
+
+      <!-- Colonne 1 : À propos -->
+      <div class="footer-col">
+        <div class="footer-logo">
+          <i class="fa-solid fa-leaf"></i>
+          GASIKARA<span>HOTEL</span>
+        </div>
+        <p class="footer-desc">
+          La chaîne hôtelière de référence à Madagascar, présente dans
+          les 6 provinces de la Grande Île depuis 2010.
+        </p>
+        <!-- Réseaux sociaux -->
+        <div class="footer-socials">
+          <a href="https://facebook.com/ysabellah.josea" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://tiktok.com/@anidor46" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+
+      <!-- Colonne 2 : Nos hôtels -->
+      <div class="footer-col">
+        <h5 class="footer-col-titre">Nos 6 Hôtels</h5>
+        <ul class="footer-liens">
+          <li><a href="#">GasikaraHotel Tana</a></li>
+          <li><a href="#">GasikaraHotel Tamatave</a></li>
+          <li><a href="#">GasikaraHotel Majunga</a></li>
+          <li><a href="#">GasikaraHotel Fianar</a></li>
+          <li><a href="#">GasikaraHotel Tuléar</a></li>
+          <li><a href="#">GasikaraHotel Diego</a></li>
+        </ul>
+      </div>
+
+      <!-- Colonne 3 : Services -->
+      <div class="footer-col">
+        <h5 class="footer-col-titre">Services</h5>
+        <ul class="footer-liens">
+          <li><a href="#">Restaurant</a></li>
+          <li><a href="#">Spa & Bien-être</a></li>
+          <li><a href="#">Excursions</a></li>
+          <li><a href="#">Événements</a></li>
+          <li><a href="#">Conciergerie</a></li>
+        </ul>
+      </div>
+
+      <!-- Colonne 4 : Contact -->
+      <div class="footer-col">
+        <h5 class="footer-col-titre">Contact</h5>
+        <ul class="footer-liens">
+          <li><i class="fa-solid fa-location-dot"></i> Antananarivo, Madagascar</li>
+          <li><i class="fa-solid fa-phone"></i> +261 37 45 471 61</li>
+          <li><i class="fa-solid fa-envelope"></i> gasikarahotel@gmail.com</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Séparateur -->
+    <div class="footer-sep"></div>
+
+    <!-- Bas du footer -->
+    <div class="footer-bas">
+      <p>© 2026 GasikaraHotel – Tous droits réservés</p>
+      <div class="footer-bas-liens">
+        <a href="#">Mentions légales</a>
+        <a href="#">Politique de confidentialité</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       MODAL DÉTAIL HÔTEL
+       S'ouvre quand on clique sur une carte hôtel
+  ════════════════════════════════════════════════════════════════════ -->
+  <div class="modal-fond" id="modal-hotel" onclick="fermerModalHotel(event)">
+    <div class="modal-hotel-boite">
+      <!-- Bouton fermeture -->
+      <button class="modal-fermer" onclick="fermerModalHotel(null,true)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <!-- Image de l'hôtel -->
+      <div class="modal-hotel-img" id="modal-hotel-img"></div>
+      <!-- Contenu textuel du modal -->
+      <div class="modal-hotel-corps">
+        <div class="modal-province" id="modal-province"></div>
+        <h2 class="modal-hotel-titre" id="modal-hotel-titre"></h2>
+        <p class="modal-hotel-desc" id="modal-hotel-desc"></p>
+        <!-- Équipements du modal -->
+        <div class="modal-equip" id="modal-equip"></div>
+        <!-- Bouton de réservation depuis le modal -->
+        <a href="#reservation" class="btn btn-primaire" onclick="fermerModalHotel(null,true)">
+          <i class="fa-regular fa-calendar-check"></i>
+          Réserver dans cet hôtel
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       MODAL DE CONFIRMATION DE RÉSERVATION
+  ════════════════════════════════════════════════════════════════════ -->
+  <div class="modal-fond" id="modal-confirm" onclick="fermerConfirm(event)">
+    <div class="modal-confirm-boite">
+      <div class="confirm-icone"><i class="fa-solid fa-check"></i></div>
+      <h3 class="confirm-titre">Réservation envoyée !</h3>
+      <p class="confirm-texte">
+        Merci pour votre confiance envers GasikaraHotel.<br>
+        Vous recevrez une confirmation par email sous 24 heures.
+      </p>
+      <!-- Numéro de réservation (généré dynamiquement par JS) -->
+      <div class="confirm-ref" id="confirm-ref">GK-XXXXX</div>
+      <button class="btn btn-primaire" onclick="fermerConfirm(null,true)">
+        <i class="fa-solid fa-xmark"></i> Fermer
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       BOUTON RETOUR EN HAUT
+  ════════════════════════════════════════════════════════════════════ -->
+  <button id="btn-top" aria-label="Retour en haut"
+    onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       LIEN VERS LE FICHIER JAVASCRIPT EXTERNE
+       Placé en bas pour que le DOM soit chargé avant l'exécution du JS
+  ════════════════════════════════════════════════════════════════════ -->
+  <script src="script.js"></script>
+
+</body>
+</html>

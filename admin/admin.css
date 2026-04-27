@@ -1,0 +1,1924 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   GASIKARAHOTEL – DASHBOARD ADMIN (admin.css)
+   Design : Dark sidebar + fond gris clair + accents vert/or
+   Thème  : Professionnel, lisible, efficace
+═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   1. VARIABLES CSS DU DASHBOARD
+───────────────────────────────────────────────────────────────────── */
+:root {
+  /* Sidebar sombre */
+  --ad-sidebar-bg:    #0f1923;   /* Fond très sombre de la sidebar          */
+  --ad-sidebar-hover: #1a2d3d;   /* Survol dans la sidebar                  */
+  --ad-sidebar-actif: #1e3a4a;   /* Item actif de la sidebar                */
+  --ad-sidebar-texte: rgba(255,255,255,0.65); /* Texte sidebar              */
+
+  /* Fond principal du dashboard */
+  --ad-fond:         #f0f2f5;    /* Fond général gris très clair            */
+  --ad-carte:        #ffffff;    /* Fond des cartes/panneaux                */
+  --ad-bordure:      #e2e8f0;    /* Couleur des bordures                    */
+
+  /* Textes */
+  --ad-texte:        #1a2332;    /* Texte principal sombre                  */
+  --ad-discret:      #6b7a8d;    /* Texte secondaire                        */
+  --ad-label:        #94a3b8;    /* Labels et petits textes                 */
+
+  /* Couleurs d'accentuation */
+  --ad-vert:         #2d6a4f;    /* Vert principal GasikaraHotel            */
+  --ad-vert-clair:   #52b788;    /* Vert clair pour les succès              */
+  --ad-or:           #e9c46a;    /* Or pour les badges premium              */
+  --ad-bleu:         #3b82f6;    /* Bleu pour les infos                     */
+  --ad-orange:       #f59e0b;    /* Orange pour les avertissements          */
+  --ad-rouge:        #ef4444;    /* Rouge pour les erreurs/danger           */
+  --ad-violet:       #8b5cf6;    /* Violet pour les stats                   */
+
+  /* Dimensions */
+  --sidebar-largeur:     260px;  /* Largeur de la sidebar dépliée           */
+  --header-hauteur:      70px;   /* Hauteur de l'en-tête                    */
+  --rayon:               10px;   /* Rayon des coins des cartes              */
+
+  /* Ombres */
+  --ombre-carte:     0 1px 3px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.06);
+  --ombre-sidebar:   4px 0 24px rgba(0,0,0,0.15);
+
+  /* Transitions */
+  --trans: 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   2. RESET ET BASE
+───────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--ad-fond);
+  color: var(--ad-texte);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+input, select, textarea { font-family: inherit; }
+ul { list-style: none; }
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   3. PAGE DE CONNEXION (LOGIN)
+───────────────────────────────────────────────────────────────────── */
+
+/* Page de login : plein écran, fond sombre */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ad-sidebar-bg);
+  position: fixed;           /* Couvre tout l'écran                         */
+  inset: 0;
+  z-index: 9999;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+/* Classe ajoutée par JS pour masquer la page de login */
+.login-page.masquee {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Fond décoratif avec cercles flous */
+.login-fond {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Cercles décoratifs flous derrière le formulaire */
+.login-fond-cercle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);        /* Flou très prononcé = effet "glow"           */
+  opacity: 0.15;
+}
+
+.c1 {
+  width: 500px; height: 500px;
+  background: var(--ad-vert);
+  top: -150px; left: -100px;
+}
+.c2 {
+  width: 400px; height: 400px;
+  background: var(--ad-bleu);
+  bottom: -100px; right: -80px;
+}
+.c3 {
+  width: 300px; height: 300px;
+  background: var(--ad-or);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+/* Boîte centrale de connexion */
+.login-boite {
+  position: relative;
+  z-index: 1;
+  background: rgba(255,255,255,0.05); /* Fond légèrement transparent        */
+  backdrop-filter: blur(20px);        /* Flou du fond derrière la boîte     */
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+  animation: apparaitreLogin 0.7s ease both;
+}
+
+@keyframes apparaitreLogin {
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* Logo dans la page de login */
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.login-logo-icone {
+  width: 50px; height: 50px;
+  background: var(--ad-vert);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: #fff;
+}
+
+.login-logo-nom {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+
+.login-logo-nom span { color: var(--ad-or); }
+
+.login-logo-sous {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Titre et description login */
+.login-titre {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+
+.login-desc {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 2rem;
+}
+
+/* Message d'erreur (caché par défaut) */
+.login-erreur {
+  display: none;           /* Affiché par JS si échec connexion              */
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(239,68,68,0.15);
+  border: 1px solid rgba(239,68,68,0.4);
+  color: #fca5a5;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  font-size: 0.83rem;
+  margin-bottom: 1.2rem;
+}
+
+.login-erreur.visible { display: flex; }
+
+/* Groupe label + input dans le login */
+.login-groupe {
+  margin-bottom: 1.2rem;
+}
+
+.login-groupe label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+/* Champs de saisie du login */
+.login-groupe input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.92rem;
+  transition: border-color var(--trans), background var(--trans);
+}
+
+.login-groupe input::placeholder { color: rgba(255,255,255,0.25); }
+
+.login-groupe input:focus {
+  outline: none;
+  border-color: var(--ad-vert-clair);
+  background: rgba(255,255,255,0.1);
+}
+
+/* Conteneur du champ mot de passe + bouton œil */
+.mdp-wrap { position: relative; }
+
+.mdp-wrap input { padding-right: 3rem; }
+
+/* Bouton pour afficher/cacher le mot de passe */
+.btn-oeil {
+  position: absolute;
+  right: 0.8rem; top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.35);
+  font-size: 0.95rem;
+  transition: color var(--trans);
+}
+
+.btn-oeil:hover { color: rgba(255,255,255,0.7); }
+
+/* Ligne "Se souvenir" + "Mot de passe oublié" */
+.login-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.82rem;
+}
+
+/* Checkbox personnalisé */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255,255,255,0.55);
+  cursor: pointer;
+}
+
+.checkbox-label input { display: none; }
+
+.checkbox-custom {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.25);
+  border-radius: 4px;
+  transition: all var(--trans);
+  position: relative;
+}
+
+/* Coche quand coché */
+.checkbox-label input:checked + .checkbox-custom {
+  background: var(--ad-vert-clair);
+  border-color: var(--ad-vert-clair);
+}
+
+.checkbox-label input:checked + .checkbox-custom::after {
+  content: '✓';
+  position: absolute;
+  top: -2px; left: 2px;
+  font-size: 0.7rem;
+  color: #fff;
+  font-weight: 900;
+}
+
+/* Lien "Mot de passe oublié" */
+.lien-mdp-oublie {
+  color: var(--ad-vert-clair);
+  font-size: 0.8rem;
+  transition: color var(--trans);
+}
+
+.lien-mdp-oublie:hover { color: var(--ad-or); }
+
+/* Bouton principal de connexion */
+.btn-login {
+  width: 100%;
+  padding: 1rem;
+  background: var(--ad-vert);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  transition: all var(--trans);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-login:hover {
+  background: var(--ad-vert-clair);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(45,106,79,0.4);
+}
+
+/* Spinner de chargement dans le bouton */
+.login-spinner {
+  display: none;          /* Affiché par JS pendant la vérification          */
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: tourner 0.7s linear infinite;
+}
+
+.login-spinner.visible { display: inline-block; }
+
+@keyframes tourner { to { transform: rotate(360deg); } }
+
+/* Indice de connexion pour la démo */
+.login-indice {
+  margin-top: 1.5rem;
+  padding: 0.7rem 1rem;
+  background: rgba(233,196,106,0.1);
+  border: 1px solid rgba(233,196,106,0.25);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: rgba(233,196,106,0.8);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   4. LAYOUT DASHBOARD (Sidebar + Contenu)
+───────────────────────────────────────────────────────────────────── */
+
+/* Layout principal : sidebar fixe + contenu scrollable */
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+/* Classe ajoutée par JS après connexion */
+.dashboard.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   5. SIDEBAR
+───────────────────────────────────────────────────────────────────── */
+
+/* Barre latérale de navigation */
+.sidebar {
+  width: var(--sidebar-largeur);
+  background: var(--ad-sidebar-bg);
+  min-height: 100vh;
+  height: 100vh;          /* ← ajoute */
+  overflow-y: auto;       /* ← ajoute défilement vertical */
+  position: fixed;
+  left: 0; top: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--ombre-sidebar);
+  transition: transform var(--trans);
+}
+
+/* Logo dans la sidebar */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem 1.2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  min-height: var(--header-hauteur);
+}
+
+.sidebar-logo-icone {
+  width: 38px; height: 38px;
+  background: var(--ad-vert);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: #fff;
+  flex-shrink: 0;
+}
+
+.sidebar-logo-texte {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.slt-gasikara {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.06em;
+}
+
+.slt-hotel {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  color: var(--ad-or);
+  text-transform: uppercase;
+}
+
+/* Bouton fermer sidebar (mobile) */
+.sidebar-fermer {
+  display: none;            /* Caché sur desktop, visible sur mobile         */
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  font-size: 1.1rem;
+  margin-left: auto;
+  transition: color var(--trans);
+}
+
+.sidebar-fermer:hover { color: #fff; }
+
+/* Label de catégorie dans la sidebar */
+.sidebar-label {
+  padding: 1.2rem 1.2rem 0.5rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  color: rgba(255,255,255,0.25);
+  text-transform: uppercase;
+}
+
+/* Navigation de la sidebar */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.3rem 0.8rem;
+}
+
+/* Item de navigation individuel */
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  font-size: 0.87rem;
+  color: var(--ad-sidebar-texte);
+  transition: all var(--trans);
+  position: relative;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  background: var(--ad-sidebar-hover);
+  color: #fff;
+}
+
+/* État actif d'un item de sidebar */
+.sidebar-item.actif {
+  background: var(--ad-sidebar-actif);
+  color: #fff;
+  /* Barre verte à gauche indiquant l'item actif */
+  border-left: 3px solid var(--ad-vert-clair);
+}
+
+/* Icône de l'item */
+.sidebar-item-icone {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  transition: background var(--trans);
+}
+
+.sidebar-item.actif .sidebar-item-icone {
+  background: var(--ad-vert);
+  color: #fff;
+}
+
+/* Badge numérique sur les items */
+.sidebar-badge {
+  display: none;           /* Caché si = 0 (géré par JS)                    */
+  margin-left: auto;
+  background: var(--ad-vert);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: 50px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* Badge urgent (en attente) en orange */
+.sidebar-badge.urgent { background: var(--ad-orange); }
+
+/* Item "Déconnexion" avec couleur rouge */
+.sidebar-item.deconnexion:hover {
+  background: rgba(239,68,68,0.1);
+  color: var(--ad-rouge);
+}
+
+/* Séparateur entre groupes de nav */
+.sidebar-sep {
+  margin: 0.5rem 1.2rem;
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Profil admin en bas de la sidebar */
+.sidebar-profil {
+  margin-top: auto;         /* Pousse vers le bas                            */
+  padding: 1rem 1.2rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Avatar du profil (initiales) */
+.profil-avatar {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--ad-vert), var(--ad-vert-clair));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.profil-nom {
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.profil-role {
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.35);
+}
+
+/* Indicateur de statut en ligne (point vert) */
+.profil-statut {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--ad-vert-clair);
+  margin-left: auto;
+  flex-shrink: 0;
+  animation: clignoter 2s ease infinite;
+}
+
+@keyframes clignoter {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   6. CONTENU PRINCIPAL
+───────────────────────────────────────────────────────────────────── */
+
+/* Zone de contenu : prend toute la largeur moins la sidebar */
+.contenu-principal {
+  margin-left: var(--sidebar-largeur);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: calc(100vw - var(--sidebar-largeur));
+  overflow-x: auto;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   7. EN-TÊTE DU DASHBOARD
+───────────────────────────────────────────────────────────────────── */
+
+/* Barre supérieure du contenu */
+.dash-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 2rem;
+  height: var(--header-hauteur);
+  background: var(--ad-carte);
+  border-bottom: 1px solid var(--ad-bordure);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+  width: 100%;          /* ← ajoute */
+  box-sizing: border-box; /* ← ajoute */
+}
+
+/* Bouton toggle sidebar mobile */
+.btn-sidebar-toggle {
+  display: none;             /* Visible seulement sur mobile                 */
+  background: none;
+  border: 1px solid var(--ad-bordure);
+  border-radius: 8px;
+  width: 38px; height: 38px;
+  color: var(--ad-discret);
+  font-size: 1rem;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--trans);
+}
+
+.btn-sidebar-toggle:hover {
+  background: var(--ad-fond);
+  color: var(--ad-texte);
+}
+
+/* Titre de la section active */
+.dash-header-titre h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ad-texte);
+}
+
+.dash-header-titre p {
+  font-size: 0.75rem;
+  color: var(--ad-discret);
+}
+
+/* Actions à droite de l'en-tête */
+.dash-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-left: auto;        /* Pousse vers la droite                         */
+  position: relative;
+}
+
+/* Barre de recherche dans l'en-tête */
+.recherche-globale {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--ad-fond);
+  border: 1px solid var(--ad-bordure);
+  border-radius: 50px;
+  padding: 0.45rem 1rem;
+}
+
+.recherche-globale i { color: var(--ad-discret); font-size: 0.85rem; }
+
+.recherche-globale input {
+  border: none;
+  background: none;
+  font-size: 0.85rem;
+  color: var(--ad-texte);
+  width: 180px;
+  outline: none;
+}
+
+.recherche-globale input::placeholder { color: var(--ad-label); }
+
+/* Bouton notifications */
+.btn-notif {
+  position: relative;
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: var(--ad-fond);
+  border: 1px solid var(--ad-bordure);
+  color: var(--ad-discret);
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--trans);
+}
+
+.btn-notif:hover { background: var(--ad-vert); color: #fff; border-color: var(--ad-vert); }
+
+/* Badge rouge sur le bouton notifications */
+.notif-badge {
+  position: absolute;
+  top: -4px; right: -4px;
+  background: var(--ad-rouge);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Panel de notifications (dropdown) */
+.notif-panel {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: 320px;
+  background: var(--ad-carte);
+  border: 1px solid var(--ad-bordure);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  z-index: 200;
+  display: none;            /* Affiché par JS au clic                        */
+  overflow: hidden;
+}
+
+.notif-panel.visible { display: block; }
+
+.notif-panel-titre {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-bottom: 1px solid var(--ad-bordure);
+}
+
+.notif-panel-titre button {
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  color: var(--ad-vert);
+  font-weight: 600;
+}
+
+/* Item de notification */
+.notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.9rem 1.2rem;
+  border-bottom: 1px solid var(--ad-fondFond, #f8f9fa);
+  transition: background var(--trans);
+  cursor: pointer;
+}
+
+.notif-item:hover { background: var(--ad-fond); }
+
+.notif-item.non-lu { background: rgba(45,106,79,0.04); }
+
+.notif-ico {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.notif-ico.vert  { background: rgba(82,183,136,0.15); color: var(--ad-vert-clair); }
+.notif-ico.orange{ background: rgba(245,158,11,0.15);  color: var(--ad-orange); }
+.notif-ico.rouge { background: rgba(239,68,68,0.15);   color: var(--ad-rouge); }
+
+.notif-titre {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ad-texte);
+}
+
+.notif-temps {
+  font-size: 0.72rem;
+  color: var(--ad-discret);
+  margin-top: 0.15rem;
+}
+
+/* Avatar admin dans l'en-tête */
+.admin-avatar {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--ad-vert), var(--ad-vert-clair));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Menu admin dropdown */
+.menu-admin {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: var(--ad-carte);
+  border: 1px solid var(--ad-bordure);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  z-index: 200;
+  display: none;
+  min-width: 180px;
+  overflow: hidden;
+}
+
+.menu-admin.visible { display: block; }
+
+.menu-admin a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: var(--ad-texte);
+  transition: background var(--trans);
+}
+
+.menu-admin a:hover { background: var(--ad-fond); }
+.menu-admin i { color: var(--ad-discret); width: 16px; }
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   8. SECTIONS DE CONTENU
+───────────────────────────────────────────────────────────────────── */
+
+/* Chaque section de contenu (tableau de bord, réservations, etc.) */
+.section-contenu {
+  padding: 2rem;
+  display: none;
+  animation: fadeSect 0.35s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Section active : visible */
+.section-contenu.actif { display: block; }
+
+@keyframes fadeSect {
+  from { opacity:0; transform: translateY(10px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   9. BANDEAU DE BIENVENUE
+───────────────────────────────────────────────────────────────────── */
+
+.bienvenue-bandeau {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, var(--ad-vert) 0%, #1d4e36 100%);
+  border-radius: var(--rayon);
+  padding: 1.8rem 2rem;
+  margin-bottom: 1.8rem;
+  color: #fff;
+}
+
+.bienvenue-titre {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.bienvenue-titre span { color: var(--ad-or); }
+
+.bienvenue-sous {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.65);
+}
+
+/* Date et heure en temps réel */
+.bienvenue-date {
+  text-align: right;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.8;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   10. CARTES KPI
+───────────────────────────────────────────────────────────────────── */
+
+/* Grille des 4 cartes KPI */
+.kpi-grille {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 1.8rem;
+}
+
+/* Carte KPI individuelle */
+.kpi-carte {
+  background: var(--ad-carte);
+  border-radius: var(--rayon);
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  box-shadow: var(--ombre-carte);
+  border: 1px solid var(--ad-bordure);
+  transition: transform var(--trans), box-shadow var(--trans);
+}
+
+.kpi-carte:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+/* Icône colorée de la KPI */
+.kpi-icone {
+  width: 54px; height: 54px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+/* Variantes de couleur des icônes KPI */
+.kpi-icone.vert   { background: rgba(45,106,79,0.12); color: var(--ad-vert); }
+.kpi-icone.orange { background: rgba(245,158,11,0.12); color: var(--ad-orange); }
+.kpi-icone.bleu   { background: rgba(59,130,246,0.12); color: var(--ad-bleu); }
+.kpi-icone.violet { background: rgba(139,92,246,0.12); color: var(--ad-violet); }
+.kpi-icone.rouge  { background: rgba(239,68,68,0.12);  color: var(--ad-rouge); }
+
+/* Valeur chiffrée de la KPI */
+.kpi-valeur {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--ad-texte);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+/* Label de la KPI */
+.kpi-label {
+  font-size: 0.78rem;
+  color: var(--ad-discret);
+  margin-bottom: 0.4rem;
+}
+
+/* Tendance (hausse/baisse) */
+.kpi-tendance {
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.kpi-tendance.hausse { color: var(--ad-vert-clair); }
+.kpi-tendance.neutre { color: var(--ad-orange); }
+.kpi-tendance.baisse { color: var(--ad-rouge); }
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   11. CARTES DU DASHBOARD (graphiques, listes)
+───────────────────────────────────────────────────────────────────── */
+
+/* Grille 2 colonnes pour les cartes */
+.dash-grille-2 {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 1.2rem;
+  margin-bottom: 1.8rem;
+}
+
+/* Carte générique du dashboard */
+.dash-carte {
+  background: var(--ad-carte);
+  border-radius: var(--rayon);
+  padding: 1.5rem;
+  box-shadow: var(--ombre-carte);
+  border: 1px solid var(--ad-bordure);
+}
+
+/* En-tête des cartes */
+.dash-carte-titre {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.3rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ad-texte);
+}
+
+/* Sélecteur d'année dans les graphiques */
+.select-annee {
+  font-size: 0.78rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--ad-bordure);
+  border-radius: 8px;
+  background: var(--ad-fond);
+  color: var(--ad-texte);
+  cursor: pointer;
+}
+
+/* Bouton "Voir tout" dans les cartes */
+.btn-voir-tout {
+  font-size: 0.78rem;
+  color: var(--ad-vert);
+  background: none;
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color var(--trans);
+}
+
+.btn-voir-tout:hover { color: var(--ad-vert-clair); }
+
+/* Conteneur des graphiques Chart.js */
+.graphique-wrap {
+  position: relative;
+  height: 220px;
+}
+
+.graphique-wrap.graphique-donut {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   12. ITEMS DE RÉSERVATIONS RÉCENTES (dans le tableau de bord)
+───────────────────────────────────────────────────────────────────── */
+
+/* Item individuel de réservation récente */
+.res-recente-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--ad-fond);
+}
+
+.res-recente-item:last-child { border-bottom: none; }
+
+/* Initiales du client */
+.res-avatar {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--ad-vert), var(--ad-vert-clair));
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.res-info { flex: 1; min-width: 0; }
+
+.res-nom {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ad-texte);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.res-hotel {
+  font-size: 0.75rem;
+  color: var(--ad-discret);
+}
+
+.res-ref {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--ad-discret);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   13. BARRES D'OCCUPATION (tableau de bord)
+───────────────────────────────────────────────────────────────────── */
+
+/* Item de taux d'occupation par province */
+.occup-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.occup-nom {
+  font-size: 0.8rem;
+  color: var(--ad-texte);
+  width: 90px;
+  flex-shrink: 0;
+}
+
+/* Barre de progression */
+.occup-barre-fond {
+  flex: 1;
+  height: 8px;
+  background: var(--ad-fond);
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.occup-barre {
+  height: 100%;
+  border-radius: 50px;
+  background: linear-gradient(90deg, var(--ad-vert), var(--ad-vert-clair));
+  transition: width 1s ease;
+}
+
+.occup-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--ad-vert);
+  width: 35px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   14. TOOLBAR (barre d'outils au-dessus des tableaux)
+───────────────────────────────────────────────────────────────────── */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+/* Groupe de boutons filtre statut */
+.toolbar-filtres {
+  display: flex;
+  gap: 0.4rem;
+  background: var(--ad-carte);
+  border: 1px solid var(--ad-bordure);
+  border-radius: 10px;
+  padding: 0.3rem;
+}
+
+/* Bouton filtre statut individuel */
+.filtre-statut {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 7px;
+  border: none;
+  background: none;
+  font-size: 0.8rem;
+  color: var(--ad-discret);
+  font-weight: 500;
+  transition: all var(--trans);
+}
+
+.filtre-statut.actif {
+  background: var(--ad-vert);
+  color: #fff;
+}
+
+.filtre-statut:hover:not(.actif) {
+  background: var(--ad-fond);
+  color: var(--ad-texte);
+}
+
+/* Points colorés dans les filtres */
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dot.vert   { background: var(--ad-vert-clair); }
+.dot.orange { background: var(--ad-orange); }
+.dot.rouge  { background: var(--ad-rouge); }
+
+/* Select de filtre */
+.select-filtre {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--ad-bordure);
+  border-radius: 10px;
+  background: var(--ad-carte);
+  color: var(--ad-texte);
+  font-size: 0.82rem;
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--trans);
+}
+
+.select-filtre:focus { border-color: var(--ad-vert); }
+
+/* Bouton ajouter (vert) dans la toolbar */
+.btn-ajouter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.2rem;
+  background: var(--ad-vert);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-left: auto;
+  transition: all var(--trans);
+}
+
+.btn-ajouter:hover {
+  background: var(--ad-vert-clair);
+  transform: translateY(-1px);
+}
+
+/* Recherche inline dans la toolbar */
+.recherche-inline {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--ad-carte);
+  border: 1px solid var(--ad-bordure);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+}
+
+.recherche-inline i { color: var(--ad-discret); font-size: 0.85rem; }
+
+.recherche-inline input {
+  border: none;
+  background: none;
+  font-size: 0.85rem;
+  color: var(--ad-texte);
+  width: 200px;
+  outline: none;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   15. TABLEAUX DE DONNÉES
+───────────────────────────────────────────────────────────────────── */
+
+/* Conteneur scrollable horizontalement */
+.tableau-wrap {
+  background: var(--ad-carte);
+  border-radius: var(--rayon);
+  border: 1px solid var(--ad-bordure);
+  overflow-x: auto;
+  box-shadow: var(--ombre-carte);
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Tableau de données */
+.tableau {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  min-width: 900px; /* ← augmente la largeur minimale */
+}
+
+/* En-tête du tableau */
+.tableau thead tr {
+  background: var(--ad-fond);
+  border-bottom: 2px solid var(--ad-bordure);
+}
+
+.tableau th {
+  padding: 0.9rem 1rem;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ad-discret);
+  white-space: nowrap;
+}
+
+/* Lignes du tableau */
+.tableau tbody tr {
+  border-bottom: 1px solid var(--ad-fond);
+  transition: background var(--trans);
+}
+
+.tableau tbody tr:hover { background: rgba(45,106,79,0.03); }
+
+.tableau tbody tr:last-child { border-bottom: none; }
+
+.tableau td {
+  padding: 0.9rem 1rem;
+  color: var(--ad-texte);
+  vertical-align: middle;
+}
+
+/* Référence en monospace */
+.td-ref {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--ad-vert);
+  font-weight: 500;
+}
+
+/* Nom du client dans le tableau */
+.td-client {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.td-avatar {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--ad-vert), var(--ad-vert-clair));
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Badges de statut colorés */
+.badge-statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.badge-statut.en_attente {
+  background: rgba(245,158,11,0.12);
+  color: var(--ad-orange);
+}
+
+.badge-statut.confirmee {
+  background: rgba(45,106,79,0.12);
+  color: var(--ad-vert);
+}
+
+.badge-statut.annulee {
+  background: rgba(239,68,68,0.12);
+  color: var(--ad-rouge);
+}
+
+/* Badges de type chambre */
+.badge-type {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 50px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.badge-type.standard       { background: rgba(100,100,100,0.1); color:#666; }
+.badge-type.superieure     { background: rgba(59,130,246,0.1); color:var(--ad-bleu); }
+.badge-type.suite          { background: rgba(233,196,106,0.2); color:var(--ad-orange); }
+.badge-type.presidentielle { background: rgba(139,92,246,0.1); color:var(--ad-violet); }
+
+/* Boutons d'action dans le tableau */
+.actions-td {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.btn-action {
+  width: 30px; height: 30px;
+  border-radius: 7px;
+  border: 1px solid var(--ad-bordure);
+  background: var(--ad-fond);
+  color: var(--ad-discret);
+  font-size: 0.78rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--trans);
+}
+
+.btn-action:hover { transform: translateY(-1px); }
+.btn-action.edit:hover  { background: var(--ad-bleu);  color: #fff; border-color: var(--ad-bleu); }
+.btn-action.view:hover  { background: var(--ad-vert);  color: #fff; border-color: var(--ad-vert); }
+.btn-action.del:hover   { background: var(--ad-rouge); color: #fff; border-color: var(--ad-rouge); }
+.btn-action.check:hover { background: var(--ad-vert-clair); color:#fff; border-color:var(--ad-vert-clair); }
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1.5rem 0;
+}
+
+.page-btn {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--ad-bordure);
+  background: var(--ad-carte);
+  color: var(--ad-discret);
+  font-size: 0.82rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all var(--trans);
+}
+
+.page-btn.actif { background: var(--ad-vert); color: #fff; border-color: var(--ad-vert); }
+.page-btn:hover:not(.actif) { background: var(--ad-fond); color: var(--ad-texte); }
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   16. GRILLE DES HÔTELS (section admin)
+───────────────────────────────────────────────────────────────────── */
+
+.grille-hotels-admin {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+
+/* Carte hôtel admin */
+.carte-hotel-admin {
+  background: var(--ad-carte);
+  border-radius: var(--rayon);
+  overflow: hidden;
+  border: 1px solid var(--ad-bordure);
+  box-shadow: var(--ombre-carte);
+  transition: transform var(--trans), box-shadow var(--trans);
+}
+
+.carte-hotel-admin:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+}
+
+.hotel-admin-img {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Overlay avec boutons d'action sur l'image */
+.hotel-admin-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity var(--trans);
+}
+
+.carte-hotel-admin:hover .hotel-admin-overlay { opacity: 1; }
+
+.hotel-admin-corps { padding: 1.2rem; }
+
+.hotel-admin-province {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ad-vert);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.hotel-admin-nom {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.hotel-admin-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--ad-discret);
+}
+
+.hotel-admin-stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.hotel-admin-stats i { color: var(--ad-vert); }
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   17. PARAMÈTRES
+───────────────────────────────────────────────────────────────────── */
+
+.parametres-grille {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* Formulaire de paramètres */
+.param-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.param-groupe {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.param-groupe label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ad-discret);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.param-groupe input {
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--ad-bordure);
+  border-radius: 8px;
+  background: var(--ad-fond);
+  color: var(--ad-texte);
+  font-size: 0.88rem;
+  transition: border-color var(--trans);
+  outline: none;
+}
+
+.param-groupe input:focus { border-color: var(--ad-vert); }
+
+/* Bouton de sauvegarde */
+.btn-sauvegarder {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  background: var(--ad-vert);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  align-self: flex-start;
+  transition: all var(--trans);
+}
+
+.btn-sauvegarder:hover { background: var(--ad-vert-clair); transform: translateY(-1px); }
+
+/* Toggle Switch */
+.toggle-liste { display: flex; flex-direction: column; gap: 0; }
+
+.toggle-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--ad-fond);
+}
+
+.toggle-item:last-child { border-bottom: none; }
+
+.toggle-titre {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ad-texte);
+}
+
+.toggle-desc {
+  font-size: 0.75rem;
+  color: var(--ad-discret);
+  margin-top: 0.2rem;
+}
+
+/* Interrupteur toggle (switch) */
+.toggle-switch { position: relative; display: inline-block; width: 42px; height: 24px; flex-shrink: 0; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--ad-bordure);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background var(--trans);
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  top: 3px; left: 3px;
+  transition: transform var(--trans);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.toggle-switch input:checked + .toggle-slider { background: var(--ad-vert); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(18px); }
+
+/* Zone dangereuse */
+.danger-zone { border: 1px solid rgba(239,68,68,0.3) !important; }
+.danger-zone .dash-carte-titre { color: var(--ad-rouge) !important; }
+
+/* Bouton danger rouge */
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: rgba(239,68,68,0.1);
+  color: var(--ad-rouge);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: all var(--trans);
+}
+
+.btn-danger:hover { background: var(--ad-rouge); color: #fff; border-color: var(--ad-rouge); }
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   18. MODALS
+───────────────────────────────────────────────────────────────────── */
+
+/* Fond du modal */
+.modal-fond {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,25,35,0.7);
+  backdrop-filter: blur(6px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--trans), visibility var(--trans);
+}
+
+.modal-fond.actif { opacity: 1; visibility: visible; }
+
+/* Boîte du modal */
+.modal-boite {
+  background: var(--ad-carte);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 620px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+  transform: scale(0.95);
+  transition: transform var(--trans);
+}
+
+.modal-fond.actif .modal-boite { transform: scale(1); }
+
+.modal-boite.modal-petit { max-width: 400px; }
+
+/* En-tête du modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.3rem 1.5rem;
+  border-bottom: 1px solid var(--ad-bordure);
+}
+
+.modal-header h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Bouton fermeture du modal */
+.modal-fermer {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--ad-bordure);
+  background: var(--ad-fond);
+  color: var(--ad-discret);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  transition: all var(--trans);
+}
+
+.modal-fermer:hover { background: var(--ad-rouge); color: #fff; border-color: var(--ad-rouge); }
+
+/* Corps du modal */
+.modal-body { padding: 1.5rem; }
+
+/* Pied du modal : boutons */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--ad-bordure);
+}
+
+/* Bouton annuler dans le modal */
+.btn-annuler {
+  padding: 0.6rem 1.4rem;
+  border: 1px solid var(--ad-bordure);
+  background: none;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: var(--ad-discret);
+  transition: all var(--trans);
+}
+
+.btn-annuler:hover { background: var(--ad-fond); color: var(--ad-texte); }
+
+/* Grille du formulaire dans le modal */
+.form-grille-modal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-g { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.form-g.col-plein { grid-column: 1 / -1; }
+
+.form-g label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ad-discret);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Champs dans les modals */
+.form-g input,
+.form-g select,
+.form-g textarea {
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--ad-bordure);
+  border-radius: 8px;
+  background: var(--ad-fond);
+  color: var(--ad-texte);
+  font-size: 0.88rem;
+  transition: border-color var(--trans);
+  outline: none;
+  resize: vertical;
+}
+
+.form-g input:focus,
+.form-g select:focus,
+.form-g textarea:focus { border-color: var(--ad-vert); }
+
+/* Icône dans le modal de suppression */
+.supp-icone {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: rgba(239,68,68,0.1);
+  border: 2px solid rgba(239,68,68,0.3);
+  color: var(--ad-rouge);
+  font-size: 1.4rem;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   19. TOAST NOTIFICATION ADMIN
+───────────────────────────────────────────────────────────────────── */
+
+.admin-toast {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  padding: 0.9rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  z-index: 9000;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+  pointer-events: none;
+  min-width: 250px;
+  max-width: 380px;
+}
+
+.admin-toast.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.admin-toast.succes {
+  background: #ecfdf5;
+  color: #065f46;
+  border-left: 4px solid var(--ad-vert-clair);
+}
+
+.admin-toast.erreur {
+  background: #fef2f2;
+  color: #991b1b;
+  border-left: 4px solid var(--ad-rouge);
+}
+
+.admin-toast.info {
+  background: #eff6ff;
+  color: #1e40af;
+  border-left: 4px solid var(--ad-bleu);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   20. OVERLAY SIDEBAR (MOBILE)
+───────────────────────────────────────────────────────────────────── */
+
+/* Fond semi-transparent derrière la sidebar ouverte sur mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 99;
+}
+
+.sidebar-overlay.visible { display: block; }
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   21. RESPONSIVE DASHBOARD
+───────────────────────────────────────────────────────────────────── */
+
+/* ─── TABLETTE (≤ 1200px) ─────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .kpi-grille         { grid-template-columns: repeat(2, 1fr); }
+  .dash-grille-2      { grid-template-columns: 1fr; }
+  .grille-hotels-admin{ grid-template-columns: repeat(2, 1fr); }
+  .parametres-grille  { grid-template-columns: 1fr; }
+}
+
+/* ─── MOBILE (≤ 768px) ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Sidebar hors écran par défaut */
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  /* Sidebar ouverte sur mobile */
+  .sidebar.ouverte {
+    transform: translateX(0);
+  }
+
+  /* Bouton fermer sidebar visible sur mobile */
+  .sidebar-fermer { display: flex; }
+
+  /* Contenu prend toute la largeur */
+  .contenu-principal { margin-left: 0; }
+
+  /* Bouton toggle visible */
+  .btn-sidebar-toggle { display: flex; }
+
+  /* Grille 1 colonne sur mobile */
+  .kpi-grille          { grid-template-columns: 1fr 1fr; }
+  .grille-hotels-admin { grid-template-columns: 1fr; }
+  .form-grille-modal   { grid-template-columns: 1fr; }
+  .form-g.col-plein    { grid-column: 1; }
+
+  /* Bandeau bienvenue en colonne */
+  .bienvenue-bandeau {
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+  }
+
+  /* Barre de recherche cachée sur très petit mobile */
+  .recherche-globale { display: none; }
+
+  /* Sections moins de padding */
+  .section-contenu { padding: 1.2rem; }
+}
+
+/* ─── TRÈS PETIT (≤ 480px) ───────────────────────────────────────── */
+@media (max-width: 480px) {
+  .kpi-grille { grid-template-columns: 1fr; }
+  .toolbar    { flex-direction: column; align-items: stretch; }
+  .btn-ajouter { margin-left: 0; justify-content: center; }
+}
