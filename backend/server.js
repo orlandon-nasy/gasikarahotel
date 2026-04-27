@@ -50,6 +50,15 @@ app.use((req, res) => {
   res.status(404).json({ success: false, message: `Route introuvable : ${req.method} ${req.url}` });
 });
 
+// Garde le serveur éveillé (anti-sleep Render)
+setInterval(() => {
+  fetch('https://gasikarahotel.onrender.com/api/health')
+    .then(() => console.log('✅ Serveur maintenu actif'))
+    .catch(() => console.log('⚠️ Ping échoué'));
+}, 14 * 60 * 1000); // toutes les 14 minutes
+
+demarrer();
+
 // Démarrage
 async function demarrer() {
   try {
