@@ -51,7 +51,7 @@ function getHeaders() {
 /* Credentials admin (en production : vérification côté serveur via JWT) */
 
 /* URL de base de l'API backend (à modifier selon ton serveur) */
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://gasikarahotel.onrender.com/api';
 
 /* ── Données de démonstration : 6 hôtels ─────────────────────────── */
 const HOTELS_DATA = [
@@ -161,7 +161,7 @@ async function connecterAdmin(event) {
 
   try {
     /* ── Appel à l'API backend au lieu de vérifier localement ── */
-    const response = await fetch('http://localhost:5000/api/auth/login', {
+    const response = await fetch('https://gasikarahotel.onrender.com/api/auth/login', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({
