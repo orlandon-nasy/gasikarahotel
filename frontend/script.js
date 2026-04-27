@@ -963,7 +963,7 @@ async function soumettreReservation(event) {
   const API_URL = (window.location.hostname === 'localhost' ||
                    window.location.hostname === '127.0.0.1')
     ? 'http://localhost:5000'
-    : 'https://gasikarahotel-api.onrender.com';
+    : 'https://gasikarahotel.onrender.com';
 
   try {
     /* ── Envoie la réservation au backend ────────────────────────────── */
