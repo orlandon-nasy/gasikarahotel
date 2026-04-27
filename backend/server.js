@@ -20,7 +20,11 @@ const PORT = process.env.PORT || 5000;
 
 // Middlewares
 app.use(cors({
-  origin: ['http://localhost:5500', 'http://127.0.0.1:5500', '*'],
+  origin: [
+    'http://localhost:5500',
+    'http://127.0.0.1:5500',
+    'https://orlandon-nasy.github.io'
+  ],
   methods: ['GET','POST','PUT','DELETE','PATCH'],
   allowedHeaders: ['Content-Type','Authorization']
 }));
