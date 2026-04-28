@@ -349,7 +349,7 @@ button { font-family: var(--font-corps); cursor: pointer; }
       rgba(10, 30, 15, 0.80) 100%
     ),
     
-    url('../img/img acceuilgit --version.jpg')
+    url('../img/img acceuil.jpg')
     center/cover no-repeat;
   animation: heroZoom 20s ease infinite alternate; /* Zoom lent du fond      */
 }
