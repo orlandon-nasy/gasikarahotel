@@ -349,7 +349,7 @@ button { font-family: var(--font-corps); cursor: pointer; }
       rgba(10, 30, 15, 0.80) 100%
     ),
     
-    url('../img/img acceuil.jpg')
+    url('../img/img acceuilgit --version.jpg')
     center/cover no-repeat;
   animation: heroZoom 20s ease infinite alternate; /* Zoom lent du fond      */
 }
@@ -1992,4 +1992,22 @@ section { padding: 5rem 5vw; }
   .grille-galerie { grid-template-columns: 1fr; grid-template-rows: auto; }
   .gal-item { height: 200px; }
   .gal-item.grand { grid-column: 1; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   23. BOUTON ESPACE ADMIN
+───────────────────────────────────────────────────────────────────── */
+
+.admin-link {
+  display: block;
+  text-align: center;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.75rem;
+  text-decoration: none;
+  margin-top: 1rem;
+  transition: color 0.3s;
+}
+
+.admin-link:hover {
+  color: rgba(255,255,255,0.8);
 }
