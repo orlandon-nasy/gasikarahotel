@@ -988,7 +988,12 @@ function chargerGrilleHotels() {
  * Ouvre le modal d'ajout/modification d'hôtel.
  */
 function ouvrirModalHotel(id) {
-  afficherToastAdmin('Fonctionnalité de modification d\'hôtel à connecter au backend', 'info');
+  idEnCoursModif = id;
+  const hotel = HOTELS_DATA.find(h => h.id === id);
+  if (hotel) {
+    afficherToastAdmin(`Hôtel : ${hotel.nom} — modification en cours`, 'info');
+  }
+  document.getElementById('modal-chambre').classList.add('actif');
 }
 
 
@@ -1201,7 +1206,13 @@ function rechercherClient(terme) {
 }
 
 function ouvrirModalClient(id) {
-  afficherToastAdmin('Modal client à connecter au backend', 'info');
+  idEnCoursModif = id;
+  const client = CLIENTS_DATA.find(c => c.id === id);
+  if (client) {
+    document.getElementById('mch-nom').value   = client.nom;
+    document.getElementById('mch-hotel').value = client.prenom;
+  }
+  document.getElementById('modal-chambre').classList.add('actif');
 }
 
 
