@@ -935,6 +935,96 @@ pwd
     </div>
   </div>
 
+<!-- Modal Hôtel (Ajouter / Modifier) -->
+<div class="modal-fond" id="modal-hotel" onclick="fermerModal('modal-hotel',event)">
+  <div class="modal-boite">
+    <div class="modal-header">
+      <h3 id="modal-hotel-titre">Nouvel hôtel</h3>
+      <button class="modal-fermer" onclick="fermerModal('modal-hotel',null,true)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grille-modal">
+        <div class="form-g col-plein"><label>Nom de l'hôtel *</label>
+          <input type="text" id="mh-nom" placeholder="Ex: GasikaraHotel Tana" />
+        </div>
+        <div class="form-g"><label>Province *</label>
+          <select id="mh-province">
+            <option value="Antananarivo">Antananarivo</option>
+            <option value="Toamasina">Toamasina</option>
+            <option value="Mahajanga">Mahajanga</option>
+            <option value="Fianarantsoa">Fianarantsoa</option>
+            <option value="Toliara">Toliara</option>
+            <option value="Antsiranana">Antsiranana</option>
+          </select>
+        </div>
+        <div class="form-g"><label>Ville *</label>
+          <input type="text" id="mh-ville" placeholder="Ex: Antananarivo" />
+        </div>
+        <div class="form-g"><label>Téléphone</label>
+          <input type="tel" id="mh-tel" placeholder="+261 37 00 000 00" />
+        </div>
+        <div class="form-g"><label>Email</label>
+          <input type="email" id="mh-email" placeholder="hotel@gasikarahotel.com" />
+        </div>
+        <div class="form-g"><label>Prix depuis (Ar/nuit)</label>
+          <input type="number" id="mh-prix" placeholder="250000" />
+        </div>
+        <div class="form-g col-plein"><label>Adresse</label>
+          <input type="text" id="mh-adresse" placeholder="Adresse complète" />
+        </div>
+        <div class="form-g col-plein"><label>Description</label>
+          <textarea id="mh-desc" rows="3" placeholder="Description de l'hôtel..."></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-annuler" onclick="fermerModal('modal-hotel',null,true)">Annuler</button>
+      <button class="btn-sauvegarder" onclick="sauvegarderHotel()">
+        <i class="fa-solid fa-floppy-disk"></i> Sauvegarder
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Client (Ajouter / Modifier) -->
+<div class="modal-fond" id="modal-client" onclick="fermerModal('modal-client',event)">
+  <div class="modal-boite">
+    <div class="modal-header">
+      <h3 id="modal-client-titre">Nouveau client</h3>
+      <button class="modal-fermer" onclick="fermerModal('modal-client',null,true)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grille-modal">
+        <div class="form-g"><label>Prénom *</label>
+          <input type="text" id="mcl-prenom" placeholder="Prénom" />
+        </div>
+        <div class="form-g"><label>Nom *</label>
+          <input type="text" id="mcl-nom" placeholder="Nom" />
+        </div>
+        <div class="form-g"><label>Email *</label>
+          <input type="email" id="mcl-email" placeholder="client@exemple.mg" />
+        </div>
+        <div class="form-g"><label>Téléphone</label>
+          <input type="tel" id="mcl-tel" placeholder="+261 34 00 000 00" />
+        </div>
+        <div class="form-g col-plein"><label>Mot de passe *</label>
+          <input type="password" id="mcl-mdp" placeholder="Mot de passe" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-annuler" onclick="fermerModal('modal-client',null,true)">Annuler</button>
+      <button class="btn-sauvegarder" onclick="sauvegarderClient()">
+        <i class="fa-solid fa-floppy-disk"></i> Sauvegarder
+      </button>
+    </div>
+  </div>
+</div>
+
   <!-- Toast notification admin -->
   <div class="admin-toast" id="admin-toast"></div>
 

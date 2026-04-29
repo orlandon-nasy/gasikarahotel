@@ -989,11 +989,59 @@ function chargerGrilleHotels() {
  */
 function ouvrirModalHotel(id) {
   idEnCoursModif = id;
-  const hotel = HOTELS_DATA.find(h => h.id === id);
-  if (hotel) {
-    afficherToastAdmin(`Hôtel : ${hotel.nom} — modification en cours`, 'info');
+  const titreModal = document.getElementById('modal-hotel-titre');
+
+  if (id) {
+    const hotel = HOTELS_DATA.find(h => h.id === id);
+    if (hotel) {
+      titreModal.textContent = 'Modifier l\'hôtel';
+      document.getElementById('mh-nom').value      = hotel.nom;
+      document.getElementById('mh-province').value = hotel.province;
+      document.getElementById('mh-prix').value     = hotel.prix;
+    }
+  } else {
+    titreModal.textContent = 'Nouvel hôtel';
+    document.getElementById('mh-nom').value      = '';
+    document.getElementById('mh-ville').value    = '';
+    document.getElementById('mh-tel').value      = '';
+    document.getElementById('mh-email').value    = '';
+    document.getElementById('mh-prix').value     = '';
+    document.getElementById('mh-adresse').value  = '';
+    document.getElementById('mh-desc').value     = '';
   }
-  document.getElementById('modal-chambre').classList.add('actif');
+  document.getElementById('modal-hotel').classList.add('actif');
+}
+
+function sauvegarderHotel() {
+  const nom      = document.getElementById('mh-nom').value.trim();
+  const province = document.getElementById('mh-province').value;
+  const ville    = document.getElementById('mh-ville').value.trim();
+  const prix     = parseInt(document.getElementById('mh-prix').value);
+
+  if (!nom || !province) {
+    afficherToastAdmin('Veuillez remplir les champs obligatoires', 'erreur');
+    return;
+  }
+
+  if (idEnCoursModif) {
+    const idx = HOTELS_DATA.findIndex(h => h.id === idEnCoursModif);
+    if (idx !== -1) {
+      HOTELS_DATA[idx].nom      = nom;
+      HOTELS_DATA[idx].province = province;
+      HOTELS_DATA[idx].prix     = prix;
+    }
+    afficherToastAdmin('Hôtel modifié avec succès ✓', 'succes');
+  } else {
+    HOTELS_DATA.push({
+      id: Date.now(), nom, province, ville,
+      prix, chambres: 0, reservations: 0, occupation: 0,
+      image: '../img/gasikara.jpg', code: nom.toLowerCase()
+    });
+    afficherToastAdmin('Hôtel ajouté avec succès ✓', 'succes');
+  }
+
+  fermerModal('modal-hotel', null, true);
+  chargerGrilleHotels();
 }
 
 
@@ -1207,14 +1255,60 @@ function rechercherClient(terme) {
 
 function ouvrirModalClient(id) {
   idEnCoursModif = id;
-  const client = CLIENTS_DATA.find(c => c.id === id);
-  if (client) {
-    document.getElementById('mch-nom').value   = client.nom;
-    document.getElementById('mch-hotel').value = client.prenom;
+  const titreModal = document.getElementById('modal-client-titre');
+
+  if (id) {
+    const client = CLIENTS_DATA.find(c => c.id === id);
+    if (client) {
+      titreModal.textContent = 'Modifier le client';
+      document.getElementById('mcl-prenom').value = client.prenom;
+      document.getElementById('mcl-nom').value    = client.nom;
+      document.getElementById('mcl-email').value  = client.email;
+      document.getElementById('mcl-tel').value    = client.tel;
+    }
+  } else {
+    titreModal.textContent = 'Nouveau client';
+    document.getElementById('mcl-prenom').value = '';
+    document.getElementById('mcl-nom').value    = '';
+    document.getElementById('mcl-email').value  = '';
+    document.getElementById('mcl-tel').value    = '';
+    document.getElementById('mcl-mdp').value    = '';
   }
-  document.getElementById('modal-chambre').classList.add('actif');
+  document.getElementById('modal-client').classList.add('actif');
 }
 
+function sauvegarderClient() {
+  const prenom = document.getElementById('mcl-prenom').value.trim();
+  const nom    = document.getElementById('mcl-nom').value.trim();
+  const email  = document.getElementById('mcl-email').value.trim();
+  const tel    = document.getElementById('mcl-tel').value.trim();
+
+  if (!prenom || !nom || !email) {
+    afficherToastAdmin('Veuillez remplir les champs obligatoires', 'erreur');
+    return;
+  }
+
+  if (idEnCoursModif) {
+    const idx = CLIENTS_DATA.findIndex(c => c.id === idEnCoursModif);
+    if (idx !== -1) {
+      CLIENTS_DATA[idx].prenom = prenom;
+      CLIENTS_DATA[idx].nom    = nom;
+      CLIENTS_DATA[idx].email  = email;
+      CLIENTS_DATA[idx].tel    = tel;
+    }
+    afficherToastAdmin('Client modifié avec succès ✓', 'succes');
+  } else {
+    CLIENTS_DATA.push({
+      id: Date.now(), prenom, nom, email, tel,
+      nb_res: 0,
+      created: new Date().toISOString().split('T')[0]
+    });
+    afficherToastAdmin('Client ajouté avec succès ✓', 'succes');
+  }
+
+  fermerModal('modal-client', null, true);
+  chargerTableauClients();
+}
 
 /* ═══════════════════════════════════════════════════════════════════════
    11. NOTIFICATIONS
