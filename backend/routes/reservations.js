@@ -265,8 +265,9 @@ router.post('/', async (req, res) => {
       adultes, enfants, prix_total: prixTotal, demandes
     });
 
-    const emailOK = await envoyerEmail(reservation, hotel.nom);
-    if (emailOK) await reservation.update({ email_envoye: true });
+    envoyerEmail(reservation, hotel.nom).then(ok => {
+      if (ok) reservation.update({ email_envoye: true });
+    }).catch(err => console.error('Erreur email:', err.message));
 
     return res.status(201).json({
       success:   true,
@@ -360,9 +361,12 @@ router.put('/:reference/confirmer', protegerRoute, async (req, res) => {
     /* Met à jour le statut en base MySQL */
     await r.update({ statut: 'confirmee' });
 
-    /* Envoie l'email de confirmation au client */
-    await envoyerEmailConfirmationDefinitive(r);
+    /* Envoie l'email EN ARRIÈRE-PLAN sans bloquer la réponse */
+    envoyerEmailConfirmationDefinitive(r).catch(err => 
+      console.error('Erreur email:', err.message)
+    );
 
+    /* Répond immédiatement sans attendre l'email */
     return res.json({
       success: true,
       message: `Réservation ${r.reference} confirmée ✓`
