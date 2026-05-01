@@ -13,7 +13,7 @@ async function envoyerEmail(reservation, nomHotel) {
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) return false;
   try {
     const transport = nodemailer.createTransport({
-      host: 'smtp.gmail.com', port: 587, secure: false,
+      service: 'gmail',
       auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
     });
     const dateA = new Date(reservation.arrivee).toLocaleDateString('fr-MG');
@@ -68,9 +68,7 @@ async function envoyerEmailConfirmationDefinitive(reservation) {
 
   try {
     const transport = nodemailer.createTransport({
-      host:   'smtp.gmail.com',
-      port:   587,
-      secure: false,
+      service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
